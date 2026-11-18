@@ -1,0 +1,20 @@
+Copyright (c) 2026 Carolina Guimarães. Todos os direitos reservados.
+
+Este repositório contém o site "trajetos — o impacto do deslocamento na
+experiência universitária de estudantes da ESDI/UERJ", trabalho de conclusão
+de curso da Escola Superior de Desenho Industrial (ESDI/UERJ).
+
+Todo o conteúdo — código, textos, imagens, ilustrações, áudios, dados e
+projeto gráfico — é protegido por direitos autorais (Lei nº 9.610/1998).
+Nenhuma licença de uso é concedida. É proibido copiar, reproduzir, modificar,
+distribuir, publicar ou usar este material, no todo ou em parte, para qualquer
+finalidade, sem autorização prévia e por escrito da autora.
+
+A visualização do repositório e do site publicado não implica permissão de
+reutilização.
+
+Exceções (materiais de terceiros, com licenças próprias):
+- Fontes Archivo, Archivo Narrow e Fira Mono (assets/fonts/): SIL Open Font
+  License 1.1 — ver os arquivos OFL-*.txt.
+- Bibliotecas carregadas de CDN (d3, MapLibre GL) e mapas (OpenFreeMap /
+  OpenStreetMap): sob as licenças de seus respectivos autores.
