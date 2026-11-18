@@ -17,6 +17,7 @@
   --cinza: #cdd0db;
   --azul: #202640;        /* azul-escuro */
   --fundo: #edeae4;
+  --bg-veu: rgba(237, 234, 228, .3);   /* --fundo a 30 %: suaviza a imagem de fundo da intro e do "sobre" */
   --cimento: #81849e;
   --esdi: #b70000;
   --amarelo: #df8200;
@@ -124,7 +125,8 @@ a { color: inherit; }
   position: fixed;
   left: 0; top: 0; width: 100%;
   height: 100vh; height: 100lvh;
-  background: url("../assets/intro/bg-desktop.png") center / cover no-repeat;
+  /* véu na cor do fundo por cima da imagem: deixa o mapa mais sutil, para não competir com os textos (cinza) */
+  background: linear-gradient(var(--bg-veu), var(--bg-veu)), url("../assets/intro/bg-desktop.png") center / cover no-repeat;
   z-index: -1;
   pointer-events: none;
 }
@@ -1117,9 +1119,9 @@ a { color: inherit; }
   left: 0; top: 0; width: 100%;
   height: 100vh;
   --bg-w: max(100vw, 300vh);
-  background: url("../assets/intro/bg-desktop.png") no-repeat;
-  background-size: var(--bg-w) auto;
-  background-position: clamp(100vw - var(--bg-w), 50vw - var(--bg-w) * .392, 0px) center;
+  background: linear-gradient(var(--bg-veu), var(--bg-veu)), url("../assets/intro/bg-desktop.png") no-repeat;
+  background-size: 100% 100%, var(--bg-w) auto;
+  background-position: 0 0, clamp(100vw - var(--bg-w), 50vw - var(--bg-w) * .392, 0px) center;
   z-index: -1;
   pointer-events: none;
 }
@@ -1205,7 +1207,7 @@ a { color: inherit; }
 .resumo-bg::after {
   content: ""; position: absolute; inset: -50%;
   background: radial-gradient(circle, #060922 .75px, transparent 1.1px) 0 0 / 3px 3px;
-  opacity: .055; transform: rotate(15deg);
+  opacity: .04; transform: rotate(15deg);   /* halftone mais suave (era .055) */
 }
 .cosmos[data-step="resumo"] .resumo-bg { opacity: 1; visibility: visible; transition: opacity .6s ease; }
 .resumo-diagram { position: absolute; z-index: 3; max-width: none; pointer-events: none; animation: resumo-in .7s ease both; }
@@ -1224,7 +1226,7 @@ a { color: inherit; }
 .loader::after {
   content: ""; position: absolute; inset: -50%; pointer-events: none;
   background: radial-gradient(circle, #060922 .75px, transparent 1.1px) 0 0 / 3px 3px;
-  opacity: .055; transform: rotate(15deg);
+  opacity: .04; transform: rotate(15deg);   /* halftone mais suave (era .055) */
 }
 .loader.is-out { opacity: 0; pointer-events: none; }
 .loader__in { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; gap: 22px; padding: 24px; }

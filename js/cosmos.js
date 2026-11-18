@@ -125,7 +125,7 @@
       sound: true,
       soundButton: false,                 // áudio toca, mas sem o botão de som no cartão
       falaVol: { inicio: 1, baldeacao: 0.871, final: 1 },         // all falas evened out to −20 LUFS (K-weighted); fala 3 is −20.6 already, so full volume
-      falas: { inicio: AU + "novaiguacu-fala-1.m4a", baldeacao: AU + "novaiguacu-fala-2-remast.m4a", final: AU + "novaiguacu-fala-3.m4a" },
+      falas: { inicio: AU + "novaiguacu-fala-1.m4a", baldeacao: AU + "novaiguacu-fala-2-remast.m4a", final: AU + "novaiguacu-fala-3.m4a?v=2" },
       chips: {
         inicio: () => [chipTime("icon-bedtime.svg", "05:20"), chipBus(), chipBald(), chipMoney("+R$9,40")],
         baldeacao: () => [chipTime("icon-clear-day.svg", "07:20")],
@@ -692,7 +692,7 @@
             // grid turned 15° (classic halftone screen angle), like the intro background's halftone
             "void main(){ vec2 q = mat2(0.9659, 0.2588, -0.2588, 0.9659) * gl_FragCoord.xy;" +
             " vec2 p = mod(q, 3.0 * r) - 1.5 * r;" +
-            " float a = (1.0 - smoothstep(0.75 * r, 1.1 * r, length(p))) * 0.09;" +
+            " float a = (1.0 - smoothstep(0.75 * r, 1.1 * r, length(p))) * 0.06;" +   // intensidade do halftone (era 0.09)
             " gl_FragColor = vec4(vec3(0.0235, 0.0353, 0.1333) * a, a); }"));   // #060922, premultiplied
           gl.linkProgram(prog);
           if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) { prog = null; return; }
