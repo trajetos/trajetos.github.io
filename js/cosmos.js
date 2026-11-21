@@ -166,7 +166,7 @@
     riobonito: {
       data: () => window.TRAJETO_RIOBONITO,
       hash: "#rio-bonito",
-      title: RB + "titulo-rio-bonito.png",
+      title: RB + "titulo-rio-bonito.png?v=2",
       homeLabel: "Rio Bonito → ESDI — voltar ao início do trajeto",
       mapLabel: "Mapa do trajeto do centro de Rio Bonito até a ESDI, na Lapa: ônibus por Tanguá, Itaboraí, São Gonçalo e Niterói, baldeação para a barca até o centro do Rio de Janeiro. Nas falas 2 e 3, arraste para explorar.",
       sound: true,
