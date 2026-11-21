@@ -995,7 +995,7 @@
     const on = step === "resumo" && !!box;
     diagramEl.hidden = !on;
     if (!on) return;
-    const src = "assets/resumo/" + routeId + "-" + layout + ".svg?v=2";
+    const src = "assets/resumo/" + routeId + "-" + layout + ".svg?v=3";
     if (!diagramEl.src.endsWith(src)) diagramEl.src = src;
     diagramEl.alt = ROUTE.resumo.alt || "";
     let [x, y, w, hgt] = box;
