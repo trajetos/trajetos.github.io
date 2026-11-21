@@ -63,6 +63,7 @@
     const tip = fig.appendChild(Object.assign(document.createElement("div"), { className: "bar-tip", role: "status" }));
     function showTip(evt, sg) {
       tip.classList.remove("is-note");
+      noteOn = null;
       tip.innerHTML = `${nf(sg.pct)}% <small>${sg.key} · ${sg.n} de ${sg.tot} estudantes em ${sg.year}` +
         `${sg.lim ? `<br>tracejado: só ${sg.tot} registros preservados — ler com cautela` : ""}</small>`;
       tip.style.setProperty("--c", sg.color);
@@ -79,17 +80,32 @@
     // ano com dados parciais (2003): o rótulo "2003*" explica por que o arco é tracejado
     const limNote = (tk) => `Por que tracejado? <small>Em ${tk.year}, apenas ${tk.segs[0].tot} registros de estudantes ` +
       `foram preservados no arquivo histórico. Por isso, o arco aparece tracejado e deve ser lido com cautela.</small>`;
+    let noteOn = null;
     function showNote(tk) {
       if (+tk.label.attr("opacity") === 0) return;   // rótulo ainda escondido (percurso em andamento)
       tip.innerHTML = limNote(tk);
       tip.style.setProperty("--c", "var(--azul)");
-      const fb = fig.getBoundingClientRect(), lb = tk.label.node().getBoundingClientRect();
-      tip.style.left = (lb.left + lb.width / 2 - fb.left) + "px";
-      tip.style.top = (lb.top - fb.top) + "px";
       tip.classList.add("is-on", "is-note");
+      // centred over the label, but kept inside the window (phones: the label sits right of centre)
+      const fb = fig.getBoundingClientRect(), lb = tk.label.node().getBoundingClientRect();
+      const half = tip.offsetWidth / 2, m = 8;
+      const mid = Math.min(Math.max(lb.left + lb.width / 2, m + half), window.innerWidth - m - half);
+      tip.style.left = (mid - fb.left) + "px";
+      tip.style.top = (lb.top - fb.top) + "px";
       gArcs.selectAll(".seg").classed("is-dim", (d) => !d.lim);
+      noteOn = tk;
     }
-    function hideNote() { tip.classList.remove("is-note"); hideTip(); }
+    function hideNote() {
+      if (!noteOn) return;
+      noteOn = null;
+      hideTip();
+      tip.classList.remove("is-note");
+      tip.textContent = "";      // an empty tip takes no room (a long hidden line would widen the page on phones)
+    }
+    // touch: a tap opens the note and it stays until the next tap anywhere else
+    document.addEventListener("pointerdown", (e) => {
+      if (noteOn && !(e.target.closest && e.target.closest(".has-note"))) hideNote();
+    });
 
     const gArcs = s.append("g"), gBar = s.append("g"), gDots = s.append("g"), gText = s.append("g");
     tracks.forEach((tk) => {
@@ -105,7 +121,9 @@
       if (tk.limitacao) {
         tk.label.classed("has-note", true).attr("tabindex", 0).attr("role", "button")
           .attr("aria-label", `${tk.year}: por que o arco é tracejado?`)
-          .on("pointerenter focus", () => showNote(tk)).on("pointerleave blur", hideNote);
+          .on("pointerenter focus", () => showNote(tk))
+          .on("pointerleave", (e) => { if (e.pointerType !== "touch") hideNote(); })
+          .on("blur", hideNote);
       }
     });
 

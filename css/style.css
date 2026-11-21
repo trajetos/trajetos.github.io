@@ -251,7 +251,6 @@ a { color: inherit; }
 .hl--amarelo     { background-image: url("../assets/intro/recorte-amarelo.png"); }
 .hl--vermelho    { background-image: url("../assets/intro/recorte-vermelho.png"); color: #fff; }
 .hl--rosa        { background-image: url("../assets/intro/recorte-rosa.png"); }
-
 /* chart screen */
 .info--chart { justify-content: flex-start; min-height: 480px; gap: 24px; }
 /* the chart screen fills the window under the menu: title clearance on top, room for the toggle at the bottom,
@@ -1060,8 +1059,8 @@ a { color: inherit; }
 
 /* ============================== RIO BONITO (mesmo player) ============================== */
 /* title sticker: 694 × 380 export → 222 × 121.6 (Figma 222 × 118 + shadow); compact = 140 wide, like the others */
-.cosmos[data-route="riobonito"] .cosmos__title { width: 138.7px; height: 76px; }   /* 222 × 121.6 image at the "trajetos" height */
-.cosmos.is-mobile[data-route="riobonito"] .cosmos__title { width: 140px; height: 76.7px; }
+.cosmos[data-route="riobonito"] .cosmos__title { width: 139.3px; height: 76px; }   /* 691 × 377 image at the "trajetos" height */
+.cosmos.is-mobile[data-route="riobonito"] .cosmos__title { width: 140.6px; height: 76.7px; }
 /* "barca ●●●●●" chip */
 .chip__dots { flex: none; width: 27px; height: 6px; background: radial-gradient(circle, var(--escuro) 2.1px, transparent 2.5px) 0 50% / 5.5px 6px repeat-x; }
 /* ESDI / lapa written on the LEFT of its pin (the route arrives from the east) */

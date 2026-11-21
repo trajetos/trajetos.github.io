@@ -14,7 +14,7 @@
   <meta property="og:title" content="Trajetos">
   <meta name="description" content="O impacto do deslocamento na experiência universitária de estudantes da ESDI/UERJ">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/maplibre-gl@4.7.1/dist/maplibre-gl.css">
-  <link rel="stylesheet" href="css/style.css?v=20261121a">
+  <link rel="stylesheet" href="css/style.css?v=20261121e">
 </head>
 <body>
 
@@ -97,10 +97,10 @@
               Com o passar dos anos e a democratização do acesso ao ensino superior, a ESDI passou a receber estudantes de todas
               as regiões do Rio de Janeiro: <b class="hl hl--azul-escuro">CENTRO</b>, <b class="hl hl--azul-claro">ZONA SUL</b>,
               <b class="hl hl--verde">ZONA NORTE</b>, <b class="hl hl--amarelo">ZONA OESTE</b><span class="arcs-only"> e cidades da
-              <b class="hl hl--vermelho">RMRJ</b>.</span><span class="bars-only">, cidades da
-              <b class="hl hl--vermelho">RMRJ</b> e até de <b class="hl hl--rosa">outras cidades</b>.</span>
+              <b class="hl hl--vermelho">RMRJ</b><sup class="fn-mark" aria-describedby="fn-rmrj">*</sup>.</span><span class="bars-only">, cidades da
+              <b class="hl hl--vermelho">RMRJ</b><sup class="fn-mark" aria-describedby="fn-rmrj">*</sup> e até de <b class="hl hl--rosa">outras cidades</b>.</span>
               <b class="km-note">Com isso, o caminho até a escola se alongou: em 2024, a distância média chega a 15,1 km, quase o dobro de 1963.</b>
-              <small class="chart-fn">RMRJ = Região Metropolitana do Rio de Janeiro, que inclui os 21 municípios ao redor da cidade do Rio de Janeiro.</small>
+              <small class="chart-fn" id="fn-rmrj">* RMRJ = Região Metropolitana, que inclui os 21 municípios ao redor da cidade do Rio de Janeiro.</small>
             </p>
             <!-- stacked-bars view keeps this same text, without the km sentence (.km-note) -->
 
@@ -292,14 +292,14 @@
   <script src="data/barras-estaqueadas.js?v=20261118d"></script>
   <script src="js/barchart.js?v=20261118d"></script>
   <script src="data/distancia/distancia.js?v=20261118d"></script>
-  <script src="js/arcos.js?v=20261121a"></script>
+  <script src="js/arcos.js?v=20261121b"></script>
   <script src="js/sobre-circulos.js?v=20261118e"></script>
   <script src="https://cdn.jsdelivr.net/npm/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
   <script src="data/cosmos-trajeto.js?v=20261118d"></script>
   <script src="data/novaiguacu-trajeto.js?v=20261118d"></script>
   <script src="data/riobonito-trajeto.js?v=20261118d"></script>
   <script src="data/resumo-diagramas.js?v=20261118d"></script>
-  <script src="js/cosmos.js?v=20261121b"></script>
-  <script src="js/main.js?v=20261118d"></script>
+  <script src="js/cosmos.js?v=20261121c"></script>
+  <script src="js/main.js?v=20261121b"></script>
 </body>
 </html>
