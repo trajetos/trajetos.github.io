@@ -326,6 +326,12 @@ a { color: inherit; }
 .arcs svg .bar { fill: var(--azul); }
 .arcs .bar-tip { transform: translate(-50%, calc(-100% - 12px)); padding: 3px 8px; font-size: 18px; }
 .arcs .bar-tip small { display: block; font-family: var(--f-mono); font-weight: 400; font-size: 11.5px; color: #d6d8e3; }
+/* 2003*: o rótulo do ano explica o tracejado */
+.arcs .bar-tip.is-note { width: 250px; white-space: normal; font-size: 15px; padding: 6px 9px 5px; }
+.arcs .bar-tip.is-note small { margin-top: 3px; line-height: 1.35; }
+.arcs svg .val.has-note { cursor: help; outline: none; }
+.arcs svg .val.has-note .yr { text-decoration: underline dotted; text-underline-offset: 3px; }
+.arcs svg .val.has-note:focus-visible .yr { fill: var(--vermelho); }
 
 /* view tabs (icons only) — bottom-right corner, only once the full chart is on */
 .chart-tabs {
