@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<!-- trajetos · © 2026 Carolina Guimarães · ESDI/UERJ · Todos os direitos reservados. -->
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="author" content="Carolina Guimarães">
+  <meta name="copyright" content="© 2026 Carolina Guimarães. Todos os direitos reservados.">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Trajetos</title>
+  <!-- favicon: seta azul-escura no navegador claro, seta clara no navegador escuro -->
+  <link rel="icon" type="image/png" sizes="48x48" href="assets/favicon/favicon-claro.png?v=3">
+  <link rel="icon" type="image/png" sizes="48x48" href="assets/favicon/favicon-claro.png?v=3" media="(prefers-color-scheme: light)">
+  <link rel="icon" type="image/png" sizes="48x48" href="assets/favicon/favicon-escuro.png?v=3" media="(prefers-color-scheme: dark)">
+  <meta property="og:title" content="Trajetos">
+  <meta name="description" content="O impacto do deslocamento na experiência universitária de estudantes da ESDI/UERJ">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/maplibre-gl@4.7.1/dist/maplibre-gl.css">
+  <link rel="stylesheet" href="css/style.css?v=20261123a">
+</head>
+<body>
+
+  <!-- ============================== INTRO ============================== -->
+  <main id="intro" class="intro" data-screen="cover" aria-live="polite">
+
+    <!-- COVER -->
+    <section class="screen screen--cover" data-name="cover">
+      <picture>
+        <source media="(max-width: 767px)" srcset="assets/intro/bg-cover-mobile.png">
+        <img class="cover__bg" src="assets/intro/bg-cover-desktop.png" alt="">
+      </picture>
+      <picture>
+        <source media="(max-width: 767px)" srcset="assets/intro/titulo-com-sub-mobile.png">
+        <img class="cover__title" src="assets/intro/titulo-capa-desktop.png?v=2" width="1432" height="747"
+             alt="trajetos — O impacto do deslocamento na experiência universitária de estudantes da ESDI/UERJ">
+      </picture>
+      <button class="btn-start" type="button" data-action="start">iniciar</button>
+    </section>
+
+    <!-- shared chrome for the inner intro screens -->
+    <div class="intro__chrome">
+      <header class="topbar">
+        <a class="topbar__home" href="#" data-action="go-intro" aria-label="trajetos — voltar à capa">
+          <img class="topbar__title" src="assets/intro/titulo-novo.png?v=3" width="412" height="198" alt="trajetos">
+        </a>
+        <nav class="topbar__menu" aria-label="principal">
+          <a href="#" data-action="go-intro">início</a>
+          <a href="#" data-action="go-selection">histórias</a>
+          <a href="#sobre" data-action="go-sobre">sobre</a>
+        </nav>
+      </header>
+
+      <button class="nav-arrow nav-arrow--prev" type="button" data-action="prev" aria-label="voltar">
+        <img src="assets/intro/prev-arrow.svg" width="104" height="153" alt="">
+      </button>
+      <button class="nav-arrow nav-arrow--next" type="button" data-action="next" aria-label="avançar">
+        <img src="assets/intro/next-arrow.svg" width="104" height="153" alt="">
+      </button>
+
+      <div class="intro__stage">
+
+        <!-- DEFAULT -->
+        <section class="screen screen--default" data-name="default">
+          <div class="info info--center">
+            <div class="text text--center">
+              <p>Fundada em 1963, a Escola Superior de Desenho Industrial (ESDI) foi o primeiro curso de ensino superior em Design da América Latina.</p>
+              <p>Ao longo de mais de seis décadas, a escola passou por <strong><em>diversas transformações</em></strong></p>
+            </div>
+            <div class="timeline-strip">
+              <img src="assets/intro/imagem-tela-inicial-2.webp" width="960" height="228"
+                   alt="Linha do tempo de 1963 até hoje: foto aérea antiga da ESDI, uma ficha de matrícula de 1968, o letreiro da escola, o estacionamento, uma carteira de estudante atual e o corredor do pátio">
+            </div>
+            <p class="text text--center text--bold">Hoje, seu corpo discente é diverso, com estudantes que vêm de diferentes lugares do Rio de Janeiro</p>
+          </div>
+        </section>
+
+        <!-- QUESTION -->
+        <section class="screen screen--question" data-name="question">
+          <div class="info info--center">
+            <p class="text text--center question">
+              Mas... será que fazer parte de uma universidade significa, necessariamente, ter as
+              <span class="underlined"><strong><em>mesmas condições para vivenciá-la</em></strong><img src="assets/intro/sublinhado-vermelho.svg" alt=""></span>?
+            </p>
+          </div>
+        </section>
+
+        <!-- CHART screens (barchart1 = arcs state 1 · barchart2 = arcs state 2, with the option to see stacked bars) -->
+        <section class="screen screen--chart" data-name="barchart">
+          <div class="info info--chart">
+            <!-- arcs · state 1 (1963) -->
+            <p class="text chart-copy" data-copy="1">
+              Nos primeiros anos de funcionamento, a maior parte dos ingressantes vinha de bairros da
+              <b class="hl hl--azul-claro">ZONA SUL</b> do Rio de Janeiro: em 1963, eram 7 em cada 10.
+              <b>Os ingressantes desse ano percorriam, em média, 7,9 km até a ESDI<sup class="fn-mark" aria-describedby="fn-linha-reta">*</sup>.</b>
+              <small class="chart-fn" id="fn-linha-reta">* Média das distâncias em linha reta entre o bairro de residência de cada ingressante e a ESDI — o trajeto real pelas ruas e transportes é mais longo.</small>
+            </p>
+            <!-- arcs · state 2 (all years) -->
+            <p class="text chart-copy" data-copy="2">
+              Com o passar dos anos e a democratização do acesso ao ensino superior, a ESDI passou a receber estudantes de todas
+              as regiões do Rio de Janeiro: <b class="hl hl--azul-escuro">CENTRO</b>, <b class="hl hl--azul-claro">ZONA SUL</b>,
+              <b class="hl hl--verde">ZONA NORTE</b>, <b class="hl hl--amarelo">ZONA OESTE</b><span class="arcs-only"> e cidades da
+              <b class="hl hl--vermelho" aria-describedby="fn-rmrj">RMRJ*</b>.</span><span class="bars-only">, cidades da
+              <b class="hl hl--vermelho" aria-describedby="fn-rmrj">RMRJ*</b> e até de <b class="hl hl--rosa">outras cidades</b>.</span>
+              <b class="km-note">Com isso, o caminho até a escola se alongou: em 2024, a distância média chega a 15,1 km, quase o dobro de 1963.</b>
+              <small class="chart-fn" id="fn-rmrj">* RMRJ = Região Metropolitana, que inclui os 21 municípios ao redor da cidade do Rio de Janeiro.</small>
+            </p>
+            <!-- stacked-bars view keeps this same text, without the km sentence (.km-note) -->
+
+            <figure class="arcs" id="arcs" data-state="1">
+              <svg role="img" aria-label="Distância média ponderada entre o bairro de residência dos estudantes e a ESDI, por ano: 1963, 1983, 2003, 2014 e 2024"></svg>
+              <button type="button" class="replay" aria-label="repetir o percurso">▶ repetir</button>
+            </figure>
+
+            <figure class="barchart" id="barchart" aria-label="Gráfico de barras empilhadas: origem dos ingressantes da ESDI por região, 1963 a 2024"></figure>
+          </div>
+          <!-- view tabs (icons only): circular chart ⇄ stacked bars -->
+          <div class="chart-tabs" role="group" aria-label="tipo de gráfico">
+            <button type="button" class="chart-tab" data-action="chart-view" data-view="arcs" aria-pressed="true" aria-label="gráfico circular" title="gráfico circular">
+              <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+                <path d="M12 21a9 9 0 1 1 9-9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                <path d="M12 16.5A4.5 4.5 0 1 1 16.5 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                <path d="M12 23v-6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
+              </svg>
+            </button>
+            <button type="button" class="chart-tab" data-action="chart-view" data-view="bars" aria-pressed="false" aria-label="barras estaqueadas" title="barras estaqueadas">
+              <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+                <rect x="3" y="3" width="5" height="18" fill="none" stroke="currentColor" stroke-width="1.8"/>
+                <rect x="9.5" y="3" width="5" height="18" fill="none" stroke="currentColor" stroke-width="1.8"/>
+                <rect x="16" y="3" width="5" height="18" fill="none" stroke="currentColor" stroke-width="1.8"/>
+                <path d="M3 13h5M9.5 9h5M16 15h5M3 17h5M9.5 15h5M16 9h5" stroke="currentColor" stroke-width="1.8"/>
+              </svg>
+            </button>
+          </div>
+        </section>
+
+        <!-- MAP -->
+        <section class="screen screen--map" data-name="map">
+          <div class="info info--map">
+            <div class="text">
+              <p>Hoje, a distribuição territorial do corpo discente da ESDI está cada vez mais ampliada.</p>
+              <p>Cada ponto no mapa representa <b>diferentes experiências de deslocamento</b>, combinações de transporte e, em alguns casos, uma rotina que começa antes do dia amanhecer.</p>
+            </div>
+            <picture class="map-anim">
+              <source media="(max-width: 767px)" srcset="assets/intro/mapa-animacao-mobile.gif">
+              <img src="assets/intro/mapa-animacao.gif" width="1600" height="800"
+                   alt="Mapa animado do Rio de Janeiro mostrando, ano a ano, os pontos de origem dos estudantes em relação à ESDI">
+            </picture>
+          </div>
+        </section>
+
+        <!-- SELECTION -->
+        <section class="screen screen--selection" data-name="selection">
+          <div class="info info--selection">
+            <div class="text">
+              <p>Para entender o impacto do deslocamento na rotina do estudante esdiano, 3 alunos que percorrem distâncias acima de 40km foram ouvidos.</p>
+              <p>Seus depoimentos evidenciam como as longas distâncias influenciam na vivência cotidiana na universidade.</p>
+            </div>
+            <div class="select-head">
+              <p class="text--bold">Selecione um ponto de partida:</p>
+              <p class="pill">*use fones de ouvido para melhor experiência</p>
+            </div>
+            <ul class="routes">
+              <li>
+                <a class="route-card" href="#cosmos" data-action="open-cosmos" data-route="cosmos">
+                  <span class="route-card__art">
+                    <picture>
+                      <source media="(max-width: 767px)" srcset="assets/intro/cosmos-mobile-imagem.png">
+                      <img src="assets/intro/cosmos-ilustra.png" alt="Ilustração: passageiros de pé dentro de um ônibus lotado">
+                    </picture>
+                    <img class="route-card__hover" src="assets/intro/cosmos-ilustra-hover.png" alt="">
+                  </span>
+                  <span class="route-card__label"><span>COSMOS</span><span>60 KM</span></span>
+                </a>
+              </li>
+              <li>
+                <a class="route-card" href="#nova-iguacu" data-action="open-cosmos" data-route="novaiguacu">
+                  <span class="route-card__art">
+                    <picture>
+                      <source media="(max-width: 767px)" srcset="assets/intro/nova-iguacu-mobile-imagem.png">
+                      <img src="assets/intro/nv-iguacu-ilustra.png" alt="Ilustração: passageiros num trem lotado">
+                    </picture>
+                    <img class="route-card__hover" src="assets/intro/nv-iguacu-ilustra-hover.png" alt="">
+                  </span>
+                  <span class="route-card__label"><span>NOVA IGUAÇU</span><span>40 KM</span></span>
+                </a>
+              </li>
+              <li>
+                <a class="route-card" href="#rio-bonito" data-action="open-cosmos" data-route="riobonito">
+                  <span class="route-card__art">
+                    <picture>
+                      <source media="(max-width: 767px)" srcset="assets/intro/rio-bonito-mobile-imagem.png">
+                      <img src="assets/intro/rb-ilustra.png" alt="Ilustração: passageiros num ônibus intermunicipal">
+                    </picture>
+                    <img class="route-card__hover" src="assets/intro/rb-ilustra-hover.png" alt="">
+                  </span>
+                  <span class="route-card__label"><span>RIO BONITO</span><span>70 KM</span></span>
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <!-- closing text: below the fold, only seen by scrolling down -->
+          <div class="selection-end">
+            <div class="selection-end__in">
+              <h2 class="selection-end__title reveal">_E você, quantos bairros atravessa?</h2>
+              <div class="selection-end__text">
+                <p class="reveal">É fato que a universidade tornou-se mais diversa e representativa. Contudo, <strong>ainda existem distâncias que determinam quais estudantes conseguirão, de fato, vivenciar plenamente a graduação.</strong></p>
+                <p class="reveal"><em>Trajetos</em> é uma visualização que reforça a necessidade de um olhar atento às desigualdades territoriais quando pensamos em melhorias no acesso e na experiência universitária na ESDI/UERJ.</p>
+              </div>
+              <a href="#sobre" class="btn-cta reveal" data-action="go-sobre">saiba mais sobre o projeto</a>
+            </div>
+            <footer class="selection-end__footer reveal">
+              <p>© 2026 Carolina Guimarães. Todos os direitos reservados.</p>
+              <p>É permitida a citação deste trabalho para fins acadêmicos, desde que indicada a fonte. Outros usos dependem de autorização prévia.</p>
+            </footer>
+          </div>
+        </section>
+
+        <!-- "scroll down" hint, shown on the route choice when coming back from a route -->
+        <!-- share: floating icon button, bottom-right corner, on the route choice only -->
+        <div class="share">
+          <span class="share__msg" role="status" aria-live="polite"></span>
+          <button type="button" class="btn-share" data-action="share" aria-label="compartilhar" title="compartilhar">
+            <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+              <circle cx="18" cy="5" r="2.6" fill="none" stroke="currentColor" stroke-width="2"/>
+              <circle cx="6" cy="12" r="2.6" fill="none" stroke="currentColor" stroke-width="2"/>
+              <circle cx="18" cy="19" r="2.6" fill="none" stroke="currentColor" stroke-width="2"/>
+              <path d="M8.3 10.8l7.4-4.4M8.3 13.2l7.4 4.4" stroke="currentColor" stroke-width="2"/>
+            </svg>
+          </button>
+        </div>        <div class="scroll-hint" aria-hidden="true"><svg viewBox="0 0 16 30" width="16" height="30" aria-hidden="true"><path d="M3 22l5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><circle class="dot" cx="8" cy="9" r="3.2" fill="currentColor"/></svg><span>role para baixo</span></div>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- ============================== COSMOS ============================== -->
+  <main id="cosmos" class="cosmos" data-step="inicio" hidden>
+    <!-- real map (MapLibre) with the route; fills the window behind everything -->
+    <div class="cosmos__map" id="cosmos-map" role="region"
+         aria-label="Mapa do trajeto de Cosmos, na Zona Oeste, até a ESDI, na Lapa: ônibus pela Zona Oeste até Coelho Neto, baldeação para o metrô pela Zona Norte até o Centro. Nas falas 2 e 3, arraste para explorar."></div>
+    <div class="cosmos__paper" aria-hidden="true"></div>
+
+    <!-- design canvas (scaled): relato cards, legend, hint -->
+    <div class="cosmos__canvas" id="cosmos-canvas">
+
+      <!-- fixed relato card stack -->
+      <div class="relatos" id="relatos"></div>
+    </div>
+
+    <header class="cosmos__top">
+        <a class="cosmos__home" href="#cosmos" data-action="cosmos-start" aria-label="Cosmos, zona oeste → ESDI — voltar ao início do trajeto">
+          <img class="cosmos__title" src="assets/cosmos/titulo-cosmos.png" alt="">
+        </a>
+        <nav class="topbar__menu" aria-label="principal">
+          <a href="#" data-action="go-intro">início</a>
+          <a href="#" data-action="go-selection">histórias</a>
+          <a href="#sobre" data-action="go-sobre">sobre</a>
+        </nav>
+    </header>
+  </main>
+
+  <!-- ============================== SOBRE ============================== -->
+  <main id="sobre" class="sobre" hidden>
+    <header class="topbar">
+      <a class="topbar__home" href="#" data-action="go-intro" aria-label="trajetos — voltar à capa">
+        <img class="topbar__title" src="assets/intro/titulo-novo.png?v=3" width="412" height="198" alt="trajetos">
+      </a>
+      <nav class="topbar__menu" aria-label="principal">
+        <a href="#" data-action="go-intro">início</a>
+        <a href="#" data-action="go-selection">histórias</a>
+        <a href="#sobre" data-action="go-sobre" aria-current="page">sobre</a>
+      </nav>
+    </header>
+
+    <article class="sobre__body">
+      <!-- chapters as accordions (native <details>): ".o projeto" starts open, the rest closed -->
+      <details class="acc" open>
+        <summary class="acc__head"><h1 class="sobre__h1">.o projeto</h1><span class="acc__icon" aria-hidden="true"></span></summary>
+        <div class="acc__body">
+          <p class="sobre__quote"><em>Trajetos</em> é fruto do Trabalho de Conclusão de Curso em Design na ESDI/UERJ de autoria de Carolina Guimarães, sob orientação de Bárbara Castro.</p>
+          <p>Como parte da minha trajetória acadêmica, de outubro de 2022 a outubro de 2024 fui bolsista prodocência do projeto Arquivo ESDI que tinha como objeto de estudo o acervo histórico da Escola Superior de Desenho Industrial (ESDI).</p>
+          <p>Dentre as muitas tarefas que nos dedicamos nesse tempo, uma delas consistia na organização dos trabalhos finais de graduação (TFGs) defendidos ao longo da primeira década de existência da escola e a sua disponibilização diretamente no site da instituição. O procedimento incluía conferir nas fichas de matrícula quem havia se graduado, localizar a versão digitalizada do trabalho na plataforma da biblioteca Sirius e publicar o documento na seção de TFGs do site da ESDI.</p>
+          <p>Nesse processo, por curiosidade, comecei a reparar em outros dados presentes nas fichas desses estudantes como nacionalidade, idade, endereço. Foi então que percebi um certo padrão: nesses primeiros anos, uma parcela significativa dos estudantes era oriunda de bairros da Zona Sul da cidade do Rio de Janeiro. Esse questionamento adquiriu uma camada extra quando, ao olhar à minha volta, me dei conta das origens de minhas colegas de projeto. A equipe na qual eu trabalhava era composta por pessoas da Zona Norte, Oeste e da Baixada Fluminense. Indo além, pensando nos meus colegas de classe na época, eram poucos os estudantes vindos da Zona Sul. Ficava evidente que, em seis décadas, o perfil discente havia mudado.</p>
+          <p>Tal observação me levou a refletir sobre o perfil discente, quem eram as pessoas que frequentavam a universidade e como os alunos atuais a constroem diariamente. Dessa inquietação nasceu o presente trabalho que consiste na investigação da origem territorial dos estudantes matriculados no curso de graduação em Design da Escola Superior de Desenho Industrial (ESDI/UERJ) ao longo dos anos (1963 - 2024), traçando um paralelo entre os primeiros alunos e o corpo discente atual, evidenciando o impacto da mobilidade urbana e distância geográfica na experiência universitária.</p>
+        </div>
+      </details>
+
+      <details class="acc">
+        <summary class="acc__head"><h1 class="sobre__h1">.metodologia</h1><span class="acc__icon" aria-hidden="true"></span></summary>
+        <div class="acc__body">
+          <details class="acc acc--sub">
+            <summary class="acc__head"><h2 class="sobre__h2">_relatos dos alunos</h2><span class="acc__icon" aria-hidden="true"></span></summary>
+            <div class="acc__body">
+              <p>Os relatos e descrições dos trajetos foram obtidos a partir de entrevistas com alunos do curso, com o objetivo de compreender as nuances das experiências individuais relacionadas à mobilidade, ao acesso à universidade e à experiência acadêmica.</p>
+              <p>Diante do escopo reduzido do trabalho, foram desenvolvidos os trajetos de três estudantes residentes em áreas mais distantes mas que, ainda assim, representam os principais locais de origem entre aqueles que enfrentam longos deslocamentos: moradores da Zona Oeste, Baixada Fluminense e Leste Metropolitano. Dessa forma, foi possível abarcar um conjunto mais amplo de realidades e experiências.</p>
+              <p>Com o intuito de preservar a identidade dos alunos, as falas foram regravadas por voluntários, mantendo o máximo da entonação e ritmo de fala original, de modo a conservar o sentimento presente no momento da entrevista.</p>
+              <ul class="sobre__vozes">
+                <li><b>.trajeto cosmos:</b> voz por Luan Letieri</li>
+                <li><b>.trajeto nova iguaçu:</b> voz por Carolina Guimarães</li>
+                <li><b>.trajeto rio bonito:</b> voz por Beatriz Duarte</li>
+              </ul>
+            </div>
+          </details>
+          <details class="acc acc--sub">
+            <summary class="acc__head"><h2 class="sobre__h2">_dados quantitativos</h2><span class="acc__icon" aria-hidden="true"></span></summary>
+            <div class="acc__body">
+              <p>Os dados referentes à evolução histórica da distribuição territorial dos discentes ao longo dos anos foram obtidos a partir de duas fontes distintas. As informações acerca do período anterior às políticas afirmativas (1963 - 2003) encontram-se disponíveis apenas em formato físico, registradas nas fichas de matrícula dos estudantes, o que demandou pesquisa documental presencial. Para o período posterior a 2003, as informações foram acessadas por meio do <a href="https://www.niesc.uerj.br/estudos-de-conjuntura/geo-vestibular" target="_blank" rel="noopener">DataUERJ</a>, plataforma gerida pelo Núcleo de Informação e Estudos de Conjuntura (NIESC), que consolida dados institucionais da universidade.</p>
+              <p>Inicialmente, os dados brutos disponibilizados pelo DataUERJ consistiam apenas nos CEPs dos ingressantes. A conversão dos CEPs em endereços foi realizada em duas etapas. Primeiramente, utilizou-se a API pública do ViaCEP para buscar automaticamente os endereços correspondentes aos CEPs. Essa etapa foi implementada no Google Planilhas por meio de um script no Google Apps Script, o que permitiu automatizar a busca dos dados de logradouro, bairro, cidade e estado. Em seguida, foi necessário um trabalho de revisão e conferência da veracidade das informações. Em relação aos dados coletados das fichas de matrícula dos alunos de 1963 a 2003, utilizou-se a API do CepAberto, banco de dados brasileiro com informações de logradouros e suas respectivas localizações.</p>
+              <p>Para a obtenção das coordenadas geográficas, foi utilizada a API pública do OpenStreetMap. Adicionalmente, a localização de cada um dos 91 bairros catalogados foi conferida manualmente. Essas informações foram organizadas em uma página de resumo, que reúne todos os bairros e a quantidade de alunos presentes em cada um ao longo dos anos.</p>
+              <p>A base de dados pode ser acessada <a href="https://github.com/hermxcarol/tcc-origem-geografica-estudantes-esdi-uerj" target="_blank" rel="noopener">aqui</a>.</p>
+            </div>
+          </details>
+          <details class="acc acc--sub">
+            <summary class="acc__head"><h2 class="sobre__h2">_a construção do gráfico circular</h2><span class="acc__icon" aria-hidden="true"></span></summary>
+            <div class="acc__body">
+              <p>Para observar como a distância entre casa e escola mudou ao longo das décadas, calculou-se, para cada ano analisado, a distância média entre os estudantes e a ESDI. Considera-se a distância geográfica em linha reta entre as coordenadas do bairro de residência e a escola, e não o trajeto efetivamente percorrido, que costuma ser maior.</p>
+              <p>Como vários estudantes moram no mesmo bairro, a média é ponderada pela quantidade de alunos: a distância de cada bairro é multiplicada pelo número de estudantes que moram nele, e a soma é dividida pelo total de alunos do ano. Em 1963, por exemplo, seis estudantes moravam em Copacabana, a 6,56 km da ESDI, e essa distância entra seis vezes na conta. Somadas as distâncias dos 30 estudantes daquele ano (237,8 km), a média é de 7,9 km.</p>
+              <p>O ponto de partida do gráfico foi representar cada ano como um círculo cujo raio corresponde à sua distância média, numa mesma escala para todos os anos:</p>
+              <figure class="sobre__fig" id="sobre-circulos">
+                <svg role="img" aria-label="Cinco círculos, um por ano, com raio proporcional à distância média ponderada: 1963, 7,9 km; 1983, 6,0 km; 2003, 10,9 km; 2014, 13,0 km; 2024, 15,1 km."></svg>
+                <figcaption>Raio proporcional à distância média ponderada de cada ano. *2003: apenas 15 registros preservados no arquivo histórico; comparabilidade limitada.</figcaption>
+              </figure>
+              <p>Em seguida, os círculos foram dispostos de forma concêntrica e abertos em arcos que terminam todos no mesmo ponto: a ESDI. A extensão de cada arco é proporcional à distância média (uma volta completa equivale a 18 km), de modo que, quanto mais longe os estudantes moram, mais longo é o arco. Na animação, todas as turmas partem juntas e avançam na mesma velocidade; por isso, os anos com maior distância média demoram mais para chegar à escola.</p>
+              <p>Cada arco também é dividido pelas cores das regiões de residência (Centro, Zona Sul, Zona Norte, Zona Oeste e RMRJ), proporcionalmente à parcela de estudantes de cada região naquele ano, da mais próxima à mais distante da ESDI. A posição de uma cor ao longo do arco indica proporção, e não a distância daquela região.</p>
+              <p>Algumas ressalvas: estudantes de outras cidades, fora da região metropolitana, não têm distância calculada e ficam fora desse gráfico. Em 2003, apenas 15 registros foram preservados, por isso o ano aparece tracejado e deve ser lido com cautela. E, como as turmas analisadas são pequenas (entre 15 e 38 estudantes), um único aluno que mora longe pode alterar a média: em 1963, um estudante de Petrópolis, a 44,85 km, eleva a média em cerca de 1,3 km.</p>
+            </div>
+          </details>
+        </div>
+      </details>
+
+      <details class="acc">
+        <summary class="acc__head"><h1 class="sobre__h1">.publicações</h1><span class="acc__icon" aria-hidden="true"></span></summary>
+        <div class="acc__body">
+          <ul class="sobre__pubs">
+            <li>
+              <span class="sobre__pub-tipo">Relatório do Trabalho de Conclusão de Curso · ESDI/UERJ</span>
+              <a href="https://www.esdi.uerj.br/projetos/12033/trajetos-humanidades-digitais-e-visualizacao-de-dados-sobre-o-impacto-do-deslocamento-na-experiencia-universitaria-de-alunos-da-esdi-uerj" target="_blank" rel="noopener">Trajetos: humanidades digitais e visualização de dados sobre o impacto do deslocamento na experiência universitária de alunos da ESDI/UERJ</a>
+            </li>
+          </ul>
+        </div>
+      </details>
+
+      <!-- CTA: back into the story, at the intro's first screen (skips the cover) -->
+      <div class="sobre__cta">
+        <a href="./" class="btn-cta" data-action="go-explore">explorar trajetos</a>
+      </div>
+    </article>
+    <footer class="sobre__footer">
+      <p>© 2026 Carolina Guimarães. Todos os direitos reservados.</p>
+      <p>É permitida a citação deste trabalho para fins acadêmicos, desde que indicada a fonte. Outros usos dependem de autorização prévia.</p>
+    </footer>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>
+  <script src="data/barras-estaqueadas.js?v=20261118d"></script>
+  <script src="js/barchart.js?v=20261118d"></script>
+  <script src="data/distancia/distancia.js?v=20261118d"></script>
+  <script src="js/arcos.js?v=20261121d"></script>
+  <script src="js/sobre-circulos.js?v=20261118e"></script>
+  <script src="https://cdn.jsdelivr.net/npm/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
+  <script src="data/cosmos-trajeto.js?v=20261118d"></script>
+  <script src="data/novaiguacu-trajeto.js?v=20261118d"></script>
+  <script src="data/riobonito-trajeto.js?v=20261118d"></script>
+  <script src="data/resumo-diagramas.js?v=20261118d"></script>
+  <script src="js/cosmos.js?v=20261123a"></script>
+  <script src="js/main.js?v=20261122a"></script>
+</body>
+</html>

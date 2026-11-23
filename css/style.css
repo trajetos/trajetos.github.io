@@ -1,0 +1,1451 @@
+/* =========================================================================
+   trajetos — estilos
+   Fontes: Archivo Narrow, Fira Mono (também no lugar da Sudo Var), Archivo (legenda)
+   ========================================================================= */
+
+@font-face { font-family: "Archivo Narrow"; src: url("../assets/fonts/ArchivoNarrow-VariableFont_wght.ttf") format("truetype"); font-weight: 400 700; font-style: normal; font-display: swap; }
+@font-face { font-family: "Archivo Narrow"; src: url("../assets/fonts/ArchivoNarrow-Italic-VariableFont_wght.ttf") format("truetype"); font-weight: 400 700; font-style: italic; font-display: swap; }
+@font-face { font-family: "Fira Mono"; src: url("../assets/fonts/FiraMono-Regular.ttf") format("truetype"); font-weight: 400; font-display: swap; }
+@font-face { font-family: "Fira Mono"; src: url("../assets/fonts/FiraMono-Medium.ttf") format("truetype"); font-weight: 500; font-display: swap; }
+@font-face { font-family: "Fira Mono"; src: url("../assets/fonts/FiraMono-Bold.ttf") format("truetype"); font-weight: 700; font-display: swap; }
+@font-face { font-family: "Archivo"; src: url("../assets/fonts/Archivo-VariableFont_wdth-wght.ttf") format("truetype"); font-weight: 100 900; font-stretch: 62% 125%; font-display: swap; }
+
+:root {
+  --menu-h: 48px;          /* menu bar height (was 80, then 56) — mobile value in the media query below */
+  --escuro: #060922;      /* filtro-noite */
+  --jornal: #e8e8e8;
+  --cinza: #cdd0db;
+  --azul: #202640;        /* azul-escuro */
+  --fundo: #edeae4;
+  --bg-veu: rgba(237, 234, 228, .3);   /* --fundo a 30 %: suaviza a imagem de fundo da intro e do "sobre" */
+  --cimento: #81849e;
+  --esdi: #b70000;
+  --amarelo: #df8200;
+  --amarelo-label: #e99900;
+  --verde: #7ba15a;
+  --azul-medio: #255b91;
+  --azul-claro: #82c8d5;
+  --vermelho: #c63d2c;
+  --rosa: #db95ab;
+  --rosa-relato: #e9abbf;
+  --claro: #edecea;
+  --vermelho-seta: #900707;
+
+  --f-narrow: "Archivo Narrow", "Arial Narrow", sans-serif;
+  --f-mono: "Fira Mono", ui-monospace, monospace;
+  --f-archivo: "Archivo", "Archivo Narrow", sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; }
+body {
+  background: var(--jornal);
+  color: var(--escuro);
+  font-family: var(--f-narrow);
+  font-size: 16px;
+  line-height: 1.3;
+  -webkit-font-smoothing: antialiased;
+}
+img { display: block; max-width: 100%; }
+p { margin: 0; }
+button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
+a { color: inherit; }
+[hidden] { display: none !important; }
+.sr-only { position: absolute !important; width: 1px; height: 1px; margin: -1px; padding: 0; border: 0; overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap; }
+
+/* ============================== INTRO ============================== */
+
+.intro { position: relative; min-height: 100vh; min-height: 100dvh; }
+
+/* screens are toggled by #intro[data-screen] */
+.screen { display: none; }
+.intro[data-screen="cover"] .screen--cover,
+.intro[data-screen="default"] .screen--default,
+.intro[data-screen="question"] .screen--question,
+.intro[data-screen="barchart1"] .screen--chart,
+.intro[data-screen="barchart2"] .screen--chart,
+.intro[data-screen="map"] .screen--map,
+.intro[data-screen="selection"] .screen--selection { display: flex; }
+
+.intro[data-screen="cover"] .intro__chrome { display: none; }
+
+.screen { animation: fade-in .45s ease both; }
+@keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .screen { animation: none; } }
+
+/* ---------- cover ---------- */
+.screen--cover {
+  position: relative;
+  height: 100vh; height: 100dvh;
+  min-height: 560px;
+  overflow: hidden;
+  align-items: center;
+  justify-content: center;
+}
+.cover__bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.cover__title {
+  position: relative;
+  width: min(716px, 62vw);
+  height: auto;
+  margin-top: -2vh;
+}
+.btn-start {
+  position: absolute;
+  left: 50%;
+  top: 83.9%;                         /* 604 / 720 */
+  transform: translateX(-50%);
+  background: #fff;
+  border: 1px solid var(--escuro);
+  padding: 6px 12px;
+  font-family: var(--f-narrow);
+  font-weight: 700;
+  font-size: 32px;
+  line-height: normal;
+  text-transform: uppercase;
+  color: var(--escuro);
+  transition: background .2s, color .2s;
+}
+.btn-start:hover, .btn-start:focus-visible { background: var(--escuro); color: #fff; }
+/* same look as .btn-start, in the page flow (end of "sobre") */
+.btn-cta {
+  display: inline-block;
+  background: #fff;
+  border: 1px solid var(--escuro);
+  padding: 5px 12px;
+  font-family: var(--f-narrow);
+  font-weight: 700;
+  font-size: 18px;
+  line-height: normal;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--escuro);
+  transition: background .2s, color .2s;
+}
+.btn-cta:hover, .btn-cta:focus-visible { background: var(--escuro); color: #fff; }
+
+/* ---------- chrome (menu + arrows + stage) ---------- */
+.intro__chrome {
+  position: relative;
+  min-height: 100vh; min-height: 100dvh;
+  background: var(--jornal);
+  padding-top: var(--menu-h);            /* room under the fixed menu */
+  isolation: isolate;                    /* keeps the fixed background below the content */
+  display: flex;
+  flex-direction: column;
+}
+/* the background image is pinned to the WINDOW (not to the chrome, whose height changes from one carousel screen
+   to the next): it stays exactly as on the first screen. 100lvh = the tallest phone viewport, so it doesn't jump
+   when the browser bar hides */
+.intro__chrome::before {
+  content: "";
+  position: fixed;
+  left: 0; top: 0; width: 100%;
+  height: 100vh; height: 100lvh;
+  /* véu na cor do fundo por cima da imagem: deixa o mapa mais sutil, para não competir com os textos (cinza) */
+  background: linear-gradient(var(--bg-veu), var(--bg-veu)), url("../assets/intro/bg-desktop.png") center / cover no-repeat;
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* the menu is PERMANENT: fixed to the top of the window, above every intro / sobre element (arrows, tooltips,
+   charts — all ≤ 7). Stays under the route player (.cosmos, z 20), which has its own fixed menu. */
+.topbar {
+  position: fixed;
+  left: 0; right: 0; top: 0;
+  z-index: 15;
+  height: var(--menu-h);
+  background: #E8E8E8;
+  flex-shrink: 0;
+}
+/* same placement as the COSMOS title (.cosmos__title); hangs 63.6 px below the bar, as in the Figma */
+.topbar__title {
+  position: absolute;
+  left: 83.03px;
+  top: calc(var(--menu-h) / 2 - 9px);   /* starts just above the menu line and hangs below the bar, as in the reference */
+  width: auto;
+  height: 76px;
+  max-width: none;
+  cursor: pointer;
+}
+.topbar__home, .cosmos__home { display: contents; }
+/* menu: fills the page width (anchored to the page edge), bold items, 24 gap */
+.topbar__menu {
+  position: absolute;
+  right: 40px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  gap: 24px;
+  font-family: var(--f-mono);
+  font-weight: 700;
+  font-size: 12px;
+  line-height: 1.3;
+  text-transform: uppercase;
+  color: var(--escuro);
+}
+.topbar__menu a {
+  text-decoration: underline;
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 3px;
+  transition: opacity .15s;
+}
+.topbar__menu a:hover, .topbar__menu a:focus-visible { opacity: .6; }
+
+.nav-arrow {
+  position: fixed;
+  z-index: 6;
+  top: calc(var(--menu-h) / 2 + 50vh);
+  transform: translateY(-50%);
+  width: 104px;
+  height: 153px;
+  transition: opacity .25s;
+}
+.nav-arrow img { width: 104px; height: 153px; }
+.nav-arrow--next { right: 0; }
+.nav-arrow--prev { left: 0; }
+.nav-arrow--prev img { transform: scaleX(-1); }
+.nav-arrow:hover img { filter: brightness(1.08); }
+.nav-arrow[aria-hidden="true"] { opacity: 0; pointer-events: none; }
+/* route choice: the page goes on below (closing band), so the arrow belongs to the first window and scrolls away
+   with it instead of staying fixed (absolute in .intro__chrome = same spot while at the top) */
+.intro[data-screen="selection"] .nav-arrow { position: absolute; }
+
+.intro__stage {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  padding: 0 104px;
+}
+.intro__stage > .screen {
+  width: 100%;
+  max-width: 992px;              /* 1200 - 2 × 104 */
+  min-height: 600px;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 0 64px;
+}
+
+.info {
+  width: 100%;
+  max-width: 800px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+  padding: 0 12px;
+}
+
+.text { max-width: 530px; width: 100%; font-size: 16px; line-height: 1.3; color: var(--escuro); }
+.text p + p { margin-top: 20px; }
+.text--center { text-align: center; }
+.text--bold { font-weight: 700; }
+.text b, .text strong { font-weight: 700; }
+
+/* default */
+.timeline-strip { width: 100%; }
+.timeline-strip img { width: 100%; height: auto; }
+
+/* question */
+.question { max-width: 448px; }
+.underlined { position: relative; display: inline-block; }
+.underlined img {
+  position: absolute;
+  left: 0; bottom: -4px;
+  width: 100%;
+  height: 4.24px;
+  pointer-events: none;
+}
+
+/* highlights (recortes) */
+.hl {
+  padding: 0 4px;
+  white-space: nowrap;
+  background: center / 100% 100% no-repeat;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+.hl--azul-claro  { background-image: url("../assets/intro/recorte-azul-claro.png"); }
+.hl--azul-escuro { background-image: url("../assets/intro/recorte-azul-escuro.png"); color: #fff; }
+.hl--verde       { background-image: url("../assets/intro/recorte-verde.png"); }
+.hl--amarelo     { background-image: url("../assets/intro/recorte-amarelo.png"); }
+.hl--vermelho    { background-image: url("../assets/intro/recorte-vermelho.png"); color: #fff; }
+.hl--rosa        { background-image: url("../assets/intro/recorte-rosa.png"); }
+/* chart screen */
+.info--chart { justify-content: flex-start; min-height: 480px; gap: 24px; }
+/* the chart screen fills the window under the menu: title clearance on top, room for the toggle at the bottom,
+   and the arcs take whatever height is left (so nothing hides behind the button) */
+.intro__stage > .screen--chart {
+  align-items: stretch;
+  height: calc(100vh - var(--menu-h)); height: calc(100dvh - var(--menu-h));
+  min-height: 520px;
+  padding-top: 72px; padding-bottom: 28px;
+}
+.screen--chart .info--chart { height: 100%; min-height: 0; margin: 0 auto; }
+.screen--chart .chart-copy { flex: none; }
+.screen--chart .arcs { flex: 1 1 auto; min-height: 0; display: flex; flex-direction: column; }
+.screen--chart .arcs { max-width: 760px; }
+/* desktop, circular chart: let it be drawn large (≈ 700 px); the screen grows and scrolls when the window is shorter.
+   (the stacked-bars view keeps fitting the window) */
+@media (min-width: 768px) {
+  .intro:not([data-chart="bars"]) .intro__stage > .screen--chart { height: auto; min-height: calc(100vh - var(--menu-h)); min-height: calc(100dvh - var(--menu-h)); padding-bottom: 48px; }
+  .intro:not([data-chart="bars"]) .screen--chart .info--chart { height: auto; }
+  .intro:not([data-chart="bars"]) .screen--chart .arcs { flex: none; }
+  /* year labels are 21 units in a 536-unit-wide viewBox → at 544 px wide they render at 21.3 px = 16 pt (the maximum) */
+  .intro:not([data-chart="bars"]) .screen--chart .arcs svg { flex: none; width: 100%; max-width: 544px; height: auto; margin: 0 auto; }
+}
+.screen--chart .arcs svg { flex: 1 1 auto; min-height: 0; height: 100%; max-height: none; }
+/* stacked bars in the same screen: the chart is drawn to fill the space left (js/barchart.js reads the box size) */
+.intro__stage > .screen--chart { max-width: 1100px; }
+.screen--chart .info--chart { max-width: 960px; }
+.intro[data-chart="bars"] .screen--chart .barchart {
+  flex: 1 1 0; min-height: 260px; max-width: 620px; width: 100%;   /* a bit wider than the text (530), close to the circular chart (544) */
+  display: block; overflow: visible;
+}
+.screen--chart .barchart svg { width: 100%; height: auto; }
+.chart-copy { max-width: 530px; color: #000; display: none; }
+/* which text / chart is on: barchart1 = arcs (1963) · barchart2 = arcs (all) · barchart2 + bars = stacked bars */
+.intro[data-screen="barchart1"] .chart-copy[data-copy="1"],
+.intro[data-screen="barchart2"] .chart-copy[data-copy="2"] { display: block; }   /* bars view: same text, km sentence hidden below */
+.intro .screen--chart .barchart { display: none; }
+.intro[data-chart="bars"] .screen--chart .barchart { display: block; animation: fade-in .45s ease both; }
+.intro[data-chart="bars"] .screen--chart .arcs { display: none; }
+
+/* ---- arcs (ported from css/distancia-arcos.css) ---- */
+.arcs { position: relative; width: 100%; max-width: 640px; margin: 0; }
+.arcs svg {
+  display: block; width: 100%; height: auto;
+  max-height: calc(100vh - 80px - 230px);   /* fit under the menu + text, above the toggle button */
+  max-height: calc(100dvh - 80px - 230px);
+  min-height: 300px;
+  overflow: visible;
+}
+/* "▶ REPETIR": small, white, aligned with the left edge of the text column, right under the text */
+.arcs .replay {
+  order: -1; flex: none;
+  align-self: flex-start;
+  margin: 0 0 6px max(0px, calc((100% - 530px) / 2));
+  padding: 4px 12px;
+  background: #fff; border: 1px solid #000; color: var(--escuro);
+  font-family: var(--f-narrow); font-weight: 700; font-size: 13px; line-height: 1.3;
+  text-transform: uppercase; letter-spacing: .01em;
+  cursor: pointer; transition: opacity .25s, background .2s, color .2s;
+}
+.arcs .replay:hover { background: var(--escuro); color: #fff; }
+.arcs[data-state="1"] .replay { opacity: 0; pointer-events: none; }
+.arcs svg text { font-family: var(--f-mono); fill: var(--azul); }
+.arcs svg .yr { font-family: var(--f-narrow); font-weight: 700; font-size: 21px; letter-spacing: -.02em; }
+.arcs svg .val { font-size: 13px; }
+.arcs svg .esdi { font-family: var(--f-narrow); font-weight: 700; font-size: 19px; fill: var(--azul); }
+.arcs svg .clock { font-size: 14px; fill: var(--cimento); }
+.arcs svg .seg { stroke: var(--azul); stroke-width: 1.6; stroke-linejoin: round; cursor: default; transition: filter .15s, opacity .15s; }
+.arcs svg .seg.lim { fill-opacity: .6; stroke-dasharray: 7 4; }
+.arcs svg .seg.is-dim { filter: saturate(.55) brightness(1.08); opacity: .55; }
+.arcs svg .start { fill: var(--jornal); stroke: var(--azul); stroke-width: 3; }
+.arcs svg .bar { fill: var(--azul); }
+.arcs .bar-tip { transform: translate(-50%, calc(-100% - 12px)); padding: 3px 8px; font-size: 18px; }
+.arcs .bar-tip small { display: block; font-family: var(--f-mono); font-weight: 400; font-size: 11.5px; color: #d6d8e3; white-space: normal; }
+/* never wider than the window (js/arcos.js also keeps it inside the edges) */
+.arcs .bar-tip { width: max-content; max-width: min(320px, calc(100vw - 16px)); }
+/* 2003*: o rótulo do ano explica o tracejado */
+.arcs .bar-tip.is-note { width: 250px; white-space: normal; font-size: 15px; padding: 6px 9px 5px; }
+.arcs .bar-tip.is-note small { margin-top: 3px; line-height: 1.35; }
+.arcs svg .val.has-note { cursor: help; outline: none; }
+.arcs svg .val.has-note .yr { text-decoration: underline dotted; text-underline-offset: 3px; }
+.arcs svg .val.has-note:focus-visible .yr { fill: var(--vermelho); }
+
+/* view tabs (icons only) — bottom-right corner, only once the full chart is on */
+.chart-tabs {
+  position: fixed; z-index: 6;
+  right: 40px; bottom: 28px;
+  display: none;
+  border: .797px solid #000;
+  background: var(--cinza);
+}
+.intro[data-screen="barchart2"] .chart-tabs { display: flex; animation: fade-in .45s ease both; }
+.chart-tab {
+  width: 48px; height: 44px;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--azul);
+  transition: background .2s, color .2s;
+}
+.chart-tab + .chart-tab { border-left: .797px solid #000; }
+.chart-tab:hover { background: #bfc3d1; }
+.chart-tab[aria-pressed="true"] { background: var(--azul); color: #ebe7df; cursor: default; }
+.chart-tab:focus-visible { outline: 2px solid var(--azul-medio); outline-offset: 2px; }
+/* bars view: same text as the full arcs chart, minus the km sentence */
+.intro[data-chart="bars"] .chart-copy .km-note { display: none; }
+/* "outras cidades" only exists in the bars (the arcs have no km for them) */
+.chart-copy .bars-only { display: none; }
+.intro[data-chart="bars"] .chart-copy .bars-only { display: inline; }
+.intro[data-chart="bars"] .chart-copy .arcs-only { display: none; }
+
+.barchart {
+  margin: 0;
+  width: 100%;
+  max-width: 680px;
+  background: #e5e4e2;
+  border-radius: 4px;
+  overflow: hidden;
+}
+.barchart { position: relative; }
+.barchart .seg { transition: filter .15s; cursor: default; }
+.barchart .seg.is-dim { filter: saturate(.55) brightness(1.08); }
+.bar-tip {
+  position: absolute;
+  left: 0; top: 0;
+  z-index: 3;
+  transform: translate(-50%, calc(-100% - 6px));
+  padding: 3px 7px 2px;
+  background: var(--escuro);
+  border-bottom: 3px solid var(--c, var(--azul-claro));
+  color: #fff;
+  font-family: var(--f-narrow);
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 1.2;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity .12s;
+}
+.bar-tip.is-inside { transform: translate(-50%, 6px); }
+.bar-tip.is-on { opacity: 1; }
+.barchart svg { display: block; width: 100%; height: auto; overflow: visible; }
+.barchart .axis-label { font-family: var(--f-mono); font-weight: 500; font-size: 12px; fill: #000; }
+.barchart .year-label { font-family: var(--f-mono); font-weight: 500; font-size: 12px; fill: var(--escuro); font-feature-settings: "calt" 0; }
+.barchart .cotas-label { font-family: var(--f-narrow); font-weight: 600; font-size: 12px; letter-spacing: -.24px; fill: var(--cimento); }
+.barchart .value-label { font-family: var(--f-narrow); font-weight: 700; font-size: 20px; fill: #000; }
+.barchart .guide { stroke: var(--cimento); stroke-width: 1; fill: none; }
+.barchart .guide--50 { mix-blend-mode: plus-lighter; stroke-dasharray: 11.887 11.887; stroke-dashoffset: 5.944; }
+.barchart .guide--cotas { stroke-dasharray: 11.933 11.933; stroke-dashoffset: 5.967; }
+
+/* map */
+.info--map { gap: 40px; }
+.info--map .text { color: #000; }
+.map-anim { width: 100%; }
+.map-anim img { width: 100%; height: auto; aspect-ratio: 1600 / 800; object-fit: cover; }
+
+/* selection */
+.info--selection .text { color: #000; }
+.select-head { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+.select-head .text--bold { font-size: 16px; color: #000; }
+.pill {
+  width: 287px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: url("../assets/intro/pill-rosa.png?v=2") center / 260px 24px no-repeat;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: normal;
+  color: var(--escuro);
+  white-space: nowrap;
+}
+.routes { list-style: none; margin: 0; padding: 0; display: flex; gap: 50px; justify-content: center; }
+.route-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  width: 194px;
+  padding: 12px;
+  text-decoration: none;
+  color: #000;
+}
+.route-card img { width: 172px; height: 195.5px; object-fit: cover; }
+.route-card__label {
+  display: flex;
+  justify-content: space-between;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: normal;
+  white-space: nowrap;
+}
+/* hover = Figma "while hovering → interaction2": instant swap to the colored illustration (all three cards) */
+.route-card__art { position: relative; display: block; }
+/* 1 px black frame (it exists in the PNGs, but disappears when they are shown at half size) */
+.route-card__art::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: 1px solid #000;
+  pointer-events: none;
+}
+.route-card.is-soon .route-card__art::after { opacity: .5; }
+.route-card__hover { position: absolute; inset: 0; visibility: hidden; pointer-events: none; }
+@media (hover: hover) and (min-width: 768px) {
+  .route-card:hover .route-card__hover,
+  .route-card:focus-visible .route-card__hover { visibility: visible; }
+}
+@media (max-width: 767px) { .route-card__hover { display: none; } }
+.route-card.is-soon img, .route-card.is-soon .route-card__label { opacity: .5; }
+
+/* the route choice fills the window; the closing text sits below it and is only reached by scrolling */
+.intro__stage > .screen--selection { flex-direction: column; align-items: center; justify-content: flex-start; padding: 0; }
+.screen--selection > .info--selection {
+  min-height: calc(100vh - var(--menu-h)); min-height: calc(100dvh - var(--menu-h));
+  justify-content: center;
+  padding-top: 24px; padding-bottom: 40px;
+}
+/* share: floating icon button in the bottom-right corner, on the route choice only (same look as .btn-start) */
+.share {
+  position: fixed; right: 24px; bottom: 24px; z-index: 8;
+  display: none; align-items: center; gap: 8px;
+}
+.intro[data-screen="selection"] .share { display: flex; }
+.btn-share {
+  display: flex; align-items: center; justify-content: center;
+  width: 44px; height: 44px;
+  background: #fff; border: 1px solid var(--escuro);
+  color: var(--escuro);
+  transition: background .2s, color .2s, border-color .2s;
+}
+.btn-share:hover, .btn-share:focus-visible { background: var(--escuro); color: #fff; border-color: #fff; }
+/* "link copiado!": a small label to the left of the button */
+.share__msg {
+  padding: 3px 8px; background: var(--escuro); color: #fff;
+  font-family: var(--f-mono); font-weight: 700; font-size: 11px; line-height: 1.3; text-transform: uppercase; white-space: nowrap;
+}
+.share__msg:empty { display: none; }
+/* closing text: a full-width dark-blue band, one window tall, content centred and the authorship at the bottom.
+   (the band is widened past the stage padding with a box-shadow + clip-path, so it never adds a sideways scroll) */
+.selection-end {
+  --end-bg: #282d52;
+  width: 100%;
+  height: 100vh; height: 100dvh;       /* exactly one window tall… */
+  min-height: max-content;             /* …unless the text needs more (very short screens) */
+  display: flex; flex-direction: column; align-items: center;
+  background: var(--end-bg);
+  box-shadow: 0 0 0 100vmax var(--end-bg);
+  clip-path: inset(0 -100vmax);
+  color: var(--claro);
+}
+.selection-end__in {
+  flex: 1;
+  width: 100%; max-width: 530px;
+  display: flex; flex-direction: column; justify-content: center;
+  padding: calc(var(--menu-h) + 40px) 0 40px;   /* centred in what shows under the fixed menu */
+}
+/* fade in as the band scrolls into view (js/main.js toggles .is-in; staggered by --d) */
+.selection-end .reveal {
+  opacity: 0; transform: translateY(32px);
+  transition: opacity .3s ease, transform .3s ease;   /* leaving: quick, all together */
+}
+.selection-end .reveal.is-in {
+  opacity: 1; transform: none;
+  transition: opacity .7s ease, transform .9s cubic-bezier(.16, .84, .3, 1);
+  transition-delay: var(--d, 0s);                      /* entering: one after the other */
+}
+@media (prefers-reduced-motion: reduce) { .selection-end .reveal { opacity: 1; transform: none; transition: none; } }
+.selection-end__title { margin: 0 0 24px; font-family: var(--f-mono); font-weight: 700; font-size: 18px; line-height: 1.3; color: var(--claro); }
+.selection-end__text p { font-family: var(--f-narrow); font-size: 16px; line-height: 1.45; }
+.selection-end__text p + p { margin-top: 18px; }
+.selection-end__text em { font-style: italic; }
+.selection-end__text strong { font-weight: 700; }
+.selection-end .btn-cta { align-self: center; margin-top: 36px; }
+.selection-end .btn-cta:hover, .selection-end .btn-cta:focus-visible { border-color: #fff; }
+.selection-end__footer { max-width: 840px; padding: 0 24px 40px; text-align: center; font-family: var(--f-mono); font-size: 12px; line-height: 1.5; color: var(--claro); opacity: .8; }
+.selection-end__footer p + p { margin-top: 6px; }
+/* "role para baixo": same look and timing as the routes' drag hint (.drag-hint) — bottom centre, light chip with a
+   thin border, mono text, a dot that slides down; shown by js/main.js when coming back from a route */
+.scroll-hint {
+  position: fixed; left: 50%; bottom: 32px; z-index: 7;
+  display: flex; align-items: center; gap: 10px;
+  transform: translate(-50%, 8px);
+  padding: 6px 12px;
+  background: var(--fundo); border: .8px solid var(--azul); color: var(--azul);
+  font-family: var(--f-mono); font-weight: 400; font-size: 14px; line-height: 1.2; white-space: nowrap;
+  opacity: 0; visibility: hidden; pointer-events: none;
+  transition: opacity .6s ease, transform .6s ease, visibility 0s linear .6s;
+}
+.scroll-hint svg { flex: none; }
+.scroll-hint .dot { animation: hint-drop 1.8s ease-in-out infinite; }
+@keyframes hint-drop { 0%, 100% { transform: translateY(-3px); } 50% { transform: translateY(8px); } }
+.intro[data-screen="selection"].show-scroll-hint .scroll-hint {
+  opacity: 1; visibility: visible; transform: translate(-50%, 0);
+  transition: opacity .6s ease, transform .6s ease, visibility 0s;
+}
+@media (max-width: 767px) { .scroll-hint { bottom: 24px; font-size: 12px; padding: 5px 10px; } }
+@media (prefers-reduced-motion: reduce) { .scroll-hint .dot { animation: none; } }
+.soon {
+  position: absolute;
+  left: 50%; top: 50%;
+  transform: translate(-50%, -50%);
+  background: var(--cinza);
+  border: .797px solid #000;
+  padding: 12px;
+  font-weight: 700;
+  font-size: 15.393px;
+  line-height: 1.3;
+  color: var(--azul);
+  white-space: nowrap;
+}
+
+/* ---------- intro: mobile ---------- */
+@media (max-width: 767px) {
+  .cover__title { width: min(355px, 94vw); margin-top: -12vh; }
+  .btn-start { top: 70.6%; }               /* 604 / 855 */
+
+  :root { --menu-h: 48px; }
+  .topbar { height: var(--menu-h); background: #E8E8E8; }
+  .intro__chrome, .sobre { padding-top: calc(var(--menu-h) + 48px); }   /* room under the fixed menu (was its 48 px margin) */
+  .topbar__title { left: 21.92px; top: calc(var(--menu-h) / 2 - 10px); height: 64px; }   /* ≈135 px wide, same as the COSMOS title */
+  .topbar__menu { right: 20px; font-size: 12px; gap: 10px; }
+
+  /* the arrows become the 54 px invisible touch strips from the design */
+  .nav-arrow {
+    position: fixed;
+    top: var(--menu-h); bottom: 0;
+    height: auto;
+    width: 54px;
+    transform: none;
+  }
+  .nav-arrow--prev { left: 0; }
+  .nav-arrow--next { right: 0; }
+  /* route choice: the strip covers only the first window (not the closing band below) */
+  .intro[data-screen="selection"] .nav-arrow { position: absolute; bottom: auto; height: calc(100vh - var(--menu-h)); height: calc(100dvh - var(--menu-h)); }
+  /* signal the strips with the same half-circle arrows as desktop, smaller */
+  .nav-arrow img {
+    display: block;
+    position: absolute;
+    top: calc(50% - 30px);              /* centre of the visible screen (strip starts at 60 px) */
+    width: 46px; height: 68px;
+    transform: translateY(-50%);
+  }
+  .nav-arrow--next img { right: 0; }
+  .nav-arrow--prev img { left: 0; transform: translateY(-50%) scaleX(-1); }
+
+  .intro__stage { padding: 0 56px; }
+  /* every screen fills the window under the menu and centres its content vertically;
+     when the content is taller than the window (short phones) the page scrolls — nothing is shrunk to fit */
+  .intro__stage > .screen {
+    min-height: calc(100vh - var(--menu-h) - 48px);
+    min-height: calc(100dvh - var(--menu-h) - 48px);
+    align-items: center;
+    padding: 16px 0 64px;
+  }
+  .info { padding: 0; gap: 40px; }
+  .text p + p { margin-top: 12px; }
+  .text { line-height: normal; }
+
+  .screen--default .text--center p:first-child { margin-bottom: 8px; }
+  .timeline-strip { height: 193px; overflow-x: auto; overflow-y: hidden; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+  .timeline-strip::-webkit-scrollbar { display: none; }
+  .timeline-strip img { width: auto; height: 193px; max-width: none; }
+  .screen--default .info { flex-direction: column; }
+  .screen--default .text--bold { order: 0; }
+
+
+  .info--chart { min-height: 0; justify-content: flex-start; }
+  /* chart: text → small "repetir" → chart → view toggle, centred under the chart; the block is centred in the window */
+  .intro__stage > .screen--chart {
+    flex-direction: column; justify-content: center; align-items: center;
+    height: auto;
+    min-height: calc(100vh - var(--menu-h) - 48px);
+    min-height: calc(100dvh - var(--menu-h) - 48px);
+    padding: 16px 0 40px;
+  }
+  .screen--chart .info--chart { height: auto; gap: 20px; }
+  .screen--chart .arcs { display: flex; flex-direction: column; flex: none; }
+  .screen--chart .arcs svg { height: auto; max-height: none; min-height: 0; }
+  .intro[data-chart="bars"] .screen--chart .barchart { display: block; flex: none; }
+  .screen--chart .barchart svg { width: 100%; max-height: none; }
+  .arcs .replay { display: block; align-self: flex-start; margin: 0 0 10px; padding: 2px 8px; font-size: 11px; }
+  .chart-tabs { position: static; align-self: center; margin-top: 24px; }
+  .chart-tab { width: 44px; height: 40px; }
+  .barchart { max-width: none; }
+  .barchart .axis-label, .barchart .year-label { font-size: 8px; }
+  .barchart .cotas-label { font-size: 12px; }
+  .timeline-strip { order: 2; }
+
+  .map-anim img { aspect-ratio: 660 / 1000; }
+
+  .routes { flex-direction: column; gap: 10px; width: 100%; justify-content: center; align-items: center; }
+  .routes > li { width: 100%; display: flex; justify-content: center; }
+  .route-card { width: 100%; max-width: 420px; padding: 0; gap: 5px; }
+  .route-card img { width: 100%; height: auto; aspect-ratio: 572 / 262; }
+  /* sized by js/main.js (fitSelection) so the three cards fit, centred, under the text */
+  .routes[style*="--card-img-h"] .route-card { width: calc(var(--card-img-h) * 572 / 262); max-width: 100%; }
+  .routes[style*="--card-img-h"] .route-card img { height: var(--card-img-h); width: 100%; object-fit: cover; }
+  .info--selection { gap: 24px; }
+  .intro__stage > .screen--selection { padding: 0; min-height: 0; }
+  .screen--selection > .info--selection {
+    min-height: calc(100vh - var(--menu-h) - 48px); min-height: calc(100dvh - var(--menu-h) - 48px);
+    justify-content: flex-start; padding: 16px 0 56px;   /* room after the last card, before the closing band */
+  }
+  .share { right: 14px; bottom: 16px; }
+  .btn-share { width: 40px; height: 40px; }
+  .selection-end__in { padding: calc(var(--menu-h) + 32px) 0 32px; }
+  .selection-end__title { font-size: 16px; margin-bottom: 20px; }
+  .selection-end__text p { font-size: 16px; line-height: 1.4; }
+  .selection-end__text p + p { margin-top: 14px; }
+  .btn-cta { font-size: 16px; }
+  .selection-end .btn-cta { margin-top: 28px; }
+  .selection-end__footer { font-size: 11px; padding-bottom: 32px; }
+  .selection-end__footer p + p { margin-top: 4px; }
+  .select-head .text--bold { white-space: nowrap; }
+}
+
+/* ============================== COSMOS ============================== */
+
+.cosmos {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  overflow: hidden;
+  background: url("../assets/cosmos/fundo.png") center / cover no-repeat var(--jornal);
+}
+.cosmos { overflow: clip; }                       /* route may extend past the window: never scrollable sideways */
+.cosmos.is-mobile { overflow-x: hidden; overflow-y: auto; }
+.cosmos.is-mobile .cosmos__canvas { overflow: clip; }  /* canvas = screen width on mobile: nothing to show past it */
+.cosmos.is-mobile::after { content: ""; display: block; height: var(--canvas-h, 100%); }
+.cosmos__canvas { z-index: 2; }
+
+/* Fixed-size design canvas, scaled to fit by JS (1200×720 desktop / 375×893 mobile) */
+.cosmos__canvas {
+  position: absolute;
+  left: 0; top: 0;
+  width: 1200px;
+  height: 720px;
+  transform-origin: 0 0;
+}
+.cosmos.is-mobile .cosmos__canvas { width: 375px; height: 893px; }
+
+
+
+.cosmos__viz {
+  position: absolute;
+  left: 0; top: 97px;
+  width: 1280px; height: 623px;
+  /* no side clipping: the route runs to the edges of the window (top/bottom still clipped) */
+  overflow: visible;
+  clip-path: inset(0 -100vw);
+}
+.cosmos.is-mobile .cosmos__viz { top: 80px; width: 375px; height: 813px; }
+
+/* ---------- top bar ---------- */
+/* lives outside the scaled canvas so it always fills the page width */
+.cosmos__top {
+  position: fixed;                       /* always on top; content scrolls underneath */
+  left: 0; right: 0; top: 0;
+  height: var(--menu-h);
+  background: #E8E8E8;
+  z-index: 30;
+}
+.cosmos__title {
+  position: absolute;
+  /* same height and place as the "trajetos" title (76 px tall, 83 px from the left) — 208 × 110 image */
+  left: 83.03px; top: calc(var(--menu-h) / 2 - 9px);
+  width: 143.7px; height: 76px;
+  max-width: none;
+  cursor: pointer;
+  transition: all .5s ease;
+}
+/* drag hint (baldeação / final): centred at the bottom of the window, styled like the map chips (.chip) */
+.drag-hint {
+  position: fixed;
+  left: 50%; bottom: 32px;
+  transform: translate(-50%, 8px);
+  z-index: 7;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 12px;
+  background: var(--fundo);
+  border: .8px solid var(--azul);
+  border-radius: 0;
+  color: var(--azul);
+  font-family: var(--f-mono);
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.2;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity .6s ease, transform .6s ease;
+}
+.drag-hint.is-on { opacity: 1; transform: translate(-50%, 0); }
+.drag-hint svg { flex: none; }
+.drag-hint .dot { animation: hint-swipe 1.8s ease-in-out infinite; }
+@keyframes hint-swipe { 0%, 100% { transform: translateX(-9px); } 50% { transform: translateX(9px); } }
+/* phone: the relato card fills the bottom of the screen, so js/cosmos.js puts the hint inside the canvas, just above it */
+.cosmos.is-mobile .drag-hint { position: absolute; left: 187.5px; top: 438px; bottom: auto; font-size: 12px; padding: 5px 10px; }
+@media (prefers-reduced-motion: reduce) { .drag-hint .dot { animation: none; } }
+
+/* Figma: selection → cosmos-início = "slide in, left, ease-out, 300 ms" */
+.cosmos.is-entering { animation: slide-in-left .3s ease-out both; }
+@keyframes slide-in-left { from { transform: translateX(100%); } to { transform: none; } }
+@media (prefers-reduced-motion: reduce) { .cosmos.is-entering { animation: none; } }
+.cosmos.is-mobile .cosmos__title { left: 21.92px; top: max(6px, calc(var(--menu-h) - 55.65px)); width: 135.07px; height: 71.43px; }
+
+/* ---------- route layer (built by cosmos.js, coordinates from the Figma "final" frame) ---------- */
+.route {
+  position: absolute;
+  left: 0; top: 0;
+  width: 1995.531px; height: 614.598px;
+  transition: transform .8s cubic-bezier(.3, .7, .2, 1);
+  will-change: transform;
+}
+.route.is-dragging { transition: none; }
+.cosmos[data-step="baldeacao"] .route,
+.cosmos[data-step="final"] .route { cursor: grab; touch-action: pan-y; }
+/* mobile: the route drags in both directions, so the finger must not scroll the page while on it */
+.cosmos.is-mobile[data-step="baldeacao"] .route,
+.cosmos.is-mobile[data-step="final"] .route { touch-action: none; }
+.route.is-dragging { cursor: grabbing !important; }
+.route:focus-visible { outline: 2px dashed var(--azul-medio); outline-offset: 8px; }
+.cosmos[data-step="resumo"] .route { opacity: 0; pointer-events: none; }
+
+.r-abs { position: absolute; }
+.r-line > img { position: absolute; display: block; max-width: none; width: auto; height: auto; }
+.r-label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+.r-label > span {
+  display: block;
+  flex: none;
+  white-space: pre;
+  line-height: 1;
+  font-weight: 600;
+  font-style: italic;
+  font-size: 14px;
+}
+.r-place {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  font-weight: 600;
+  line-height: 1.3;
+  white-space: nowrap;
+  pointer-events: none;
+}
+.r-place .n { font-size: 21.237px; color: var(--escuro); }
+.r-place .z { font-size: 18.203px; font-weight: 700; }
+.r-marker { pointer-events: none; }
+.r-marker img { width: 100%; height: 100%; max-width: none; }
+
+[data-show] { transition: opacity .5s ease; }
+.cosmos[data-step="inicio"] [data-show~="b"]:not([data-show~="i"]),
+.cosmos[data-step="inicio"] [data-show~="f"]:not([data-show~="i"]) { opacity: 0; pointer-events: none; }
+.cosmos[data-step="baldeacao"] [data-show]:not([data-show~="b"]) { opacity: 0; pointer-events: none; }
+.cosmos[data-step="final"] [data-show]:not([data-show~="f"]) { opacity: 0; pointer-events: none; }
+
+/* baldeação circle variants */
+.bald { position: absolute; left: 1140.31px; top: 127.7px; width: 48.135px; height: 48.135px; pointer-events: none; }
+.bald img { position: absolute; max-width: none; transition: all .5s ease; }
+.bald .o { left: 0; top: 0; width: 48.135px; height: 48.135px; }
+.bald .i { left: 14.75px; top: 14.75px; width: 18.725px; height: 18.725px; mix-blend-mode: multiply; }
+.cosmos[data-step="baldeacao"] .bald .o { left: -23.65px; top: -23.66px; width: 95.446px; height: 95.446px; }
+.cosmos[data-step="baldeacao"] .bald .i { left: 5.6px; top: 5.59px; width: 37.13px; height: 37.13px; }
+
+/* ---------- chips ---------- */
+.chip-group {
+  pointer-events: none;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4.86px;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity .45s ease, transform .45s ease;
+}
+.chip-group.is-on { opacity: 1; transform: none; }
+.chip-title { font-weight: 600; font-style: italic; font-size: 17.5px; line-height: 1.3; color: var(--escuro); margin-bottom: 0; }
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 7.5px;
+  height: 30px;
+  padding: 5px;
+  background: var(--fundo);
+  border: .585px solid var(--azul);
+  font-family: var(--f-mono);
+  font-size: 15px;
+  line-height: 1.3;
+  color: var(--escuro);
+  white-space: nowrap;
+}
+.chip img { flex: none; width: 14.555px; height: 14.555px; max-width: none; }
+.chip--time { border-width: .709px; font-size: 17.021px; color: var(--azul); padding: 0 6.34px; gap: 13px; }
+.chip--time img { width: 17.72px; height: 17.72px; }
+.chip--tight { gap: 0; }
+.chip--tight img + span, .chip--tight span + img { margin-left: 0; }
+.chip--two { height: 49.489px; align-items: flex-start; padding-top: 3.96px; }
+.chip--two img { margin-top: 2.18px; }
+.chip--two .t { display: flex; flex-direction: column; }
+.chip--two .late { color: var(--vermelho); text-decoration: line-through; }
+.chip--two .real { font-weight: 700; }
+
+/* ---------- relatos (cards) ---------- */
+.relatos {
+  position: absolute;
+  left: 52.61px; top: 223px;            /* viz top 97 + (311.5 + 21 − 206.5) */
+  width: 331.507px; height: 413.028px;
+  z-index: 6;
+}
+.card {
+  position: absolute;
+  background: var(--rosa-relato);
+  filter: drop-shadow(0 0 11.25px rgba(0, 0, 0, .1));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 22.5px;
+  transition: transform .5s ease, opacity .4s ease;
+}
+.card[data-pos="1"] { inset: 5% 5.33% 11.21% 5%; transform: rotate(2deg); }
+.card[data-pos="2"] { inset: 8.5% 6.45% 5% 6.11%; transform: rotate(-1deg); }
+.card[data-pos="3"] { inset: 13.65% 6.86% 5.59% 6.53%; }
+.card[data-pos="r"] { inset: 5% 5% 8.05% 7.55%; transform: rotate(-1deg); border-radius: 2.25px; }
+
+.card__content { width: 240.687px; display: flex; flex-direction: column; align-items: flex-start; }
+.card__vol { position: relative; width: 28.688px; height: 27.485px; margin-bottom: -10.8px; transform: rotate(-2deg); border-radius: 50%; transition: opacity .2s; }
+.card__vol img { width: 100%; height: 100%; max-width: none; }
+.card__vol:hover { opacity: .85; }
+.card__vol.is-muted { opacity: .45; }
+.card__vol.is-muted::after { content: ""; position: absolute; left: 50%; top: 8%; bottom: 8%; width: 2px; background: var(--claro); transform: translateX(-50%) rotate(45deg); border-radius: 1px; }
+.card__body { width: 100%; display: flex; flex-direction: column; align-items: center; gap: 17.851px; }
+.card__q1 { width: 17.851px; height: 14.327px; }
+.card__q2 { width: 18.595px; height: 14.924px; }
+.card__text { width: 238.762px; font-size: 14.876px; line-height: 1.3; color: var(--escuro); }
+.card__text p + p { margin-top: 14.876px; }
+.card__text b { font-weight: 700; }
+.card__text mark {
+  background: var(--escuro);
+  color: var(--claro);
+  font-weight: 700;
+  padding: 0 2px;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+.card__nav { width: 100%; display: flex; justify-content: center; gap: 14.4px; padding: 5.4px; }
+.card__btn {
+  width: 54px; height: 49.5px;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--cinza);
+  border: .9px solid var(--escuro);
+  font-weight: 700; font-size: 18px; line-height: 1.3;
+  color: var(--azul);
+  transition: background .2s;
+}
+.card__btn:hover:not(:disabled) { background: #bfc3d1; }
+.card__btn:disabled { opacity: .1; cursor: default; }
+
+/* resumo card */
+.card--resumo { flex-direction: column; gap: 29.752px; }
+.card--resumo .lead { width: 238.762px; font-family: var(--f-mono); font-size: 14.4px; line-height: 1.3; }
+.card--resumo .lead b { font-weight: 700; }
+.card--resumo .facts { width: 238.762px; font-family: var(--f-mono); font-weight: 700; font-size: 14.4px; line-height: 1.3; }
+.card--resumo .facts p + p { margin-top: 10.8px; }
+.card--resumo .facts mark { background: var(--escuro); color: var(--jornal); padding: 0 1px; -webkit-box-decoration-break: clone; box-decoration-break: clone; }
+.card--resumo .actions { width: 235.013px; display: flex; gap: 11.085px; align-items: center; padding: 4.271px; }
+.btn-replay {
+  width: 53.387px; height: 49.5px;
+  background: var(--azul);
+  color: #ebe7df;
+  font-weight: 700; font-size: 24.94px; line-height: 1;
+}
+.btn-next-route {
+  height: 49.5px; width: 162px;
+  display: flex; align-items: center;
+  padding: 13.423px;
+  background: var(--cinza);
+  border: .797px solid #000;
+  font-weight: 700; font-size: 15.393px; line-height: 1.3;
+  color: var(--azul);
+  white-space: nowrap;
+}
+.btn-replay:hover { background: #2e3659; }
+.btn-next-route:hover { background: #bfc3d1; }
+
+/* ---------- resumo graphic ---------- */
+.resumo {
+  position: absolute;
+  left: 336.88px; top: 102.19px;
+  width: 885.075px; height: 430.577px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .6s ease;
+}
+.cosmos[data-step="resumo"] .resumo { opacity: 1; }
+.resumo .r-place { line-height: 1.3; }
+.resumo .r-place .n, .resumo .r-place .z { font-size: 16px; }
+
+.legend { position: absolute; left: 282.88px; top: 324.8px; width: 502px; height: 100px; font-family: var(--f-archivo); font-size: 15.442px; line-height: 1; color: var(--escuro); }
+.legend .lg { position: absolute; white-space: nowrap; }
+.legend .lg b { font-weight: 700; }
+.legend .lg u { text-decoration: underline; }
+.legend img { position: absolute; max-width: none; }
+
+/* ---------- cosmos: mobile canvas (375 × 893) ---------- */
+.cosmos.is-mobile .relatos { left: 0; top: 0; width: 375px; height: 893px; pointer-events: none; }
+/* phone: the card starts at its top (set in js) and grows with the text — min-height reaches the old bottom */
+.cosmos.is-mobile .card { inset: auto 0 auto 0; transform: none; filter: none; align-items: flex-start; padding: 46px 55px 36px; pointer-events: auto; }
+.cosmos.is-mobile .card__content { width: 265px; }
+.cosmos.is-mobile .card__vol { display: none; }          /* no sound toggle on phones (every route) */
+.cosmos.is-mobile .card__text { width: 265px; font-size: 16px; }
+.cosmos.is-mobile .card__body { gap: 20px; }
+.cosmos.is-mobile .card__btn { width: 60px; height: 55px; }
+.cosmos.is-mobile .card--resumo { align-items: flex-start; padding-top: 22px; gap: 34px; }
+.cosmos.is-mobile .card--resumo .lead,
+.cosmos.is-mobile .card--resumo .facts { width: 265px; font-size: 16px; }
+.cosmos.is-mobile .card--resumo .actions { width: 265px; gap: 12px; }
+.cosmos.is-mobile .btn-replay { width: 60px; height: 55px; }
+.cosmos.is-mobile .btn-next-route { width: 181px; height: 55px; font-size: 16px; }
+.cosmos.is-mobile .resumo { left: -73.8px; top: -104.9px; }
+.cosmos.is-mobile .legend { left: 113.8px; top: 404.9px; transform: scale(.62); transform-origin: 0 0; }
+.cosmos.is-mobile .card { box-shadow: 0 -1px 0 rgba(6, 9, 34, .06), 0 -4px 10px rgba(0, 0, 0, .05); }
+
+/* ============================== COSMOS · mapa real (MapLibre) ============================== */
+.cosmos { background: var(--jornal); }
+.cosmos__map { position: fixed; inset: 0; z-index: 0; background: #e7e6e4; }
+.cosmos__map .maplibregl-canvas { outline: none; }
+.cosmos[data-step="baldeacao"] .cosmos__map .maplibregl-canvas-container,
+.cosmos[data-step="final"] .cosmos__map .maplibregl-canvas-container { cursor: grab; }
+.cosmos__map .maplibregl-canvas-container:active { cursor: grabbing; }
+/* paper / halftone texture over the map, like the Figma frames */
+/* (the halftone texture is now drawn inside the map, under the route — js/cosmos.js addHalftone) */
+.cosmos__paper { display: none; }
+.cosmos__canvas { z-index: 2; pointer-events: none; }
+.cosmos__canvas .card, .cosmos__canvas .legend { pointer-events: auto; }
+.cosmos.is-mobile .cosmos__canvas .card { pointer-events: auto; }
+.map-fail { position: absolute; left: 50%; top: 45%; transform: translate(-50%, -50%); margin: 0; font-style: italic; color: var(--cimento); }
+.cosmos__map .maplibregl-ctrl-attrib { font-family: var(--f-narrow); font-size: 11px; background: rgba(232, 232, 232, .8); }
+
+/* everything on the map is decoration: let drags go through to the map */
+.cosmos__map .maplibregl-marker { pointer-events: none; }
+
+/* step visibility (i / b / f / r) — !important because MapLibre writes an inline opacity on markers */
+.cosmos[data-step="inicio"] .maplibregl-marker[data-show]:not([data-show~="i"]),
+.cosmos[data-step="baldeacao"] .maplibregl-marker[data-show]:not([data-show~="b"]),
+.cosmos[data-step="final"] .maplibregl-marker[data-show]:not([data-show~="f"]),
+.cosmos[data-step="resumo"] .maplibregl-marker[data-show]:not([data-show~="r"]) { opacity: 0 !important; }
+.cosmos .maplibregl-marker[data-show] { transition: opacity .5s ease; }
+
+/* station: vertical tick from the colour line + rotated italic name (Figma "bairro") */
+/* (marker roots keep MapLibre's position:absolute — never override position/transform on them) */
+.st { width: 0; height: var(--tall, 80px); transition: opacity .5s ease; }
+.st__tk { position: absolute; left: -1.25px; bottom: 0; width: 2.5px; height: 100%; border-radius: 1.25px; transition: height .6s ease; }
+.st--zo .st__tk { background: var(--amarelo); }
+.st--zn .st__tk { background: var(--verde); }
+.st--ce .st__tk { background: var(--azul-medio); }
+.st__lb {
+  position: absolute; left: 3px; bottom: calc(100% - 4px);
+  transform-origin: left bottom;
+  font-family: var(--f-narrow); font-weight: 600; font-style: italic; font-size: 14px; line-height: 1;
+  white-space: pre;
+  transition: opacity .4s ease;
+}
+.st--zo .st__lb { color: var(--amarelo); }
+.st--zn .st__lb { color: var(--verde); }
+.st--ce .st__lb { color: var(--azul-medio); }
+
+/* big place labels ("cosmos, ZONA OESTE" etc.) */
+.place { display: flex; flex-direction: column; font-family: var(--f-narrow); line-height: 1.3; white-space: nowrap; transition: opacity .5s ease; }
+.place .n { font-weight: 600; font-size: 21.237px; color: var(--escuro); }
+.place .z { font-weight: 700; font-size: 18.203px; }
+.place--up { position: absolute; left: -4px; bottom: calc(100% + 4px); }
+.st--zn .place--up { left: 50%; transform: translateX(-50%); }
+.esdi-lb { display: flex; flex-direction: column; line-height: 1; transition: opacity .5s ease; }
+.esdi-lb b { font-family: var(--f-narrow); font-weight: 700; font-size: 17.5px; color: var(--esdi); }
+.esdi-lb i { font-family: var(--f-narrow); font-weight: 600; font-style: italic; font-size: 14px; color: var(--azul-medio); }
+
+.pin { width: 47.96px; height: 47.96px; transition: opacity .5s ease; }
+.pin--end { width: 40px; height: 40px; }
+.pin img { width: 100%; height: 100%; max-width: none; }
+
+/* transfer circle (default / selected in baldeação) */
+.bald2 { width: 48.135px; height: 48.135px; transition: opacity .5s ease; }
+.bald2 img { position: absolute; max-width: none; transition: all .5s ease; }
+.bald2 .o { left: 0; top: 0; width: 48.135px; height: 48.135px; }
+.bald2 .i { left: 14.75px; top: 14.75px; width: 18.725px; height: 18.725px; mix-blend-mode: multiply; }
+/* the transfer of the current step is drawn big (Cosmos: baldeação · Nova Iguaçu: 1st in início, 2nd in final) */
+.cosmos[data-step="baldeacao"] .bald2--b .o,
+.cosmos[data-step="inicio"] .bald2--i .o,
+.cosmos[data-step="final"] .bald2--f .o { left: -23.65px; top: -23.66px; width: 95.446px; height: 95.446px; }
+.cosmos[data-step="baldeacao"] .bald2--b .i,
+.cosmos[data-step="inicio"] .bald2--i .i,
+.cosmos[data-step="final"] .bald2--f .i { left: 5.6px; top: 5.59px; width: 37.13px; height: 37.13px; }
+
+/* chips hang from their point and move with the map */
+.cosmos__map .chip-group { position: static; }
+
+/* resumo: compact overview — short ticks without names, smaller place labels (as in the Figma) */
+.cosmos[data-step="resumo"] .st { height: 38px; }
+.cosmos[data-step="resumo"] .st__lb { opacity: 0; }
+.cosmos[data-step="resumo"] .st--place { height: 46px; }
+.cosmos[data-step="resumo"] .place .n,
+.cosmos[data-step="resumo"] .place .z { font-size: 16px; }
+/* (marker roots are positioned by MapLibre with transform — resize, never scale them) */
+.pin { transition: opacity .5s ease, width .6s ease, height .6s ease; }
+.cosmos[data-step="resumo"] .pin { width: 19.78px; height: 19.78px; }
+.cosmos[data-step="resumo"] .pin--end { width: 16.5px; height: 16.5px; }
+.cosmos[data-step="resumo"] .bald2 { width: 21.085px; height: 21.085px; }
+.cosmos[data-step="resumo"] .bald2 .o { width: 21.085px; height: 21.085px; }
+.cosmos[data-step="resumo"] .bald2 .i { left: 6.46px; top: 6.46px; width: 8.2px; height: 8.2px; }
+
+/* legend (resumo only) — same composition as the Figma, inside the scaled canvas */
+.cosmos .legend { left: 619.76px; top: 524px; opacity: 0; pointer-events: none; transition: opacity .6s ease; }
+.cosmos[data-step="resumo"] .legend { opacity: 1; }
+/* phone resumo (every route): legend centred right above the card (card top = 503 in the 375-wide canvas);
+   js/cosmos.js keeps the route above it and draws the lines thicker */
+.cosmos.is-mobile .legend { left: 21px; top: 418px; transform: scale(.66); }
+.cosmos.is-mobile[data-step="resumo"] .st__tk { left: -.8px; width: 1.6px; }
+.cosmos.is-mobile[data-step="resumo"] .st--bar .st__tk { left: -2px; width: 4px; }
+.cosmos.is-mobile[data-step="resumo"] .st { height: 24px; }
+.cosmos.is-mobile[data-step="resumo"] .st--place,
+.cosmos.is-mobile[data-step="resumo"] .st--bar { height: 32px; }
+.cosmos.is-mobile[data-step="resumo"] .place--bar .n,
+.cosmos.is-mobile[data-step="resumo"] .place--bar .z { font-size: 10.5px; }
+.cosmos.is-mobile[data-step="resumo"] .place--bar .r { font-size: 9px; }
+.cosmos.is-mobile[data-step="resumo"] .place:not(.place--bar) .n,
+.cosmos.is-mobile[data-step="resumo"] .place:not(.place--bar) .z { font-size: 12px; }
+.cosmos.is-mobile[data-step="resumo"] .place--ni .r { font-size: 10px; }
+/* phone resumo: the start label moves from the left of the pin to just BELOW it (frees the width for the route).
+   Only the label's children move — the marker root's transform belongs to MapLibre.
+   Cosmos label: anchor "right" [-34, 18] · Nova Iguaçu: anchor "bottom-right" [-36, 6] (new routes: same idea) */
+.cosmos.is-mobile[data-step="resumo"] .place--left > span { position: relative; transform: translate(calc(100% + 24px), 14px); }
+.cosmos.is-mobile[data-route="novaiguacu"][data-step="resumo"] .place--left > span { transform: translate(calc(100% + 26px), 52px); }
+.cosmos.is-mobile[data-step="resumo"] .esdi-lb b { font-size: 13px; }
+.cosmos.is-mobile[data-step="resumo"] .esdi-lb i { font-size: 11px; }
+
+/* ============================== NOVA IGUAÇU (mesmo player do COSMOS) ============================== */
+.st--rm .st__tk { background: var(--vermelho); }
+.st--rm .st__lb { color: var(--vermelho); }
+/* municipality boundaries: thick bar + "bairro / MUNICÍPIO / região" (Figma: mesquita, são joão de meriti, pavuna) */
+.st--bar .st__tk { left: -4px; width: 8px; border-radius: 0; }
+.place--bar { position: absolute; left: -4px; bottom: calc(100% + 4px); line-height: 1.05; }
+.place--bar .n { font-size: 14px; font-weight: 700; }
+.place--bar .z { font-size: 14.5px; }
+.place .r { font-family: var(--f-narrow); font-weight: 700; font-size: 11px; line-height: 1.1; }
+.place--ni { text-align: left; }
+.place--ni .z { font-size: 18.203px; }
+.place--ni .r { font-size: 14px; }
+.pin--ni { width: 40px; height: 40px; }
+.cosmos[data-step="resumo"] .pin--ni { width: 16.5px; height: 16.5px; }
+.cosmos[data-step="resumo"] .st--bar { height: 46px; }
+.cosmos[data-step="resumo"] .st--bar .st__tk { left: -2.5px; width: 5px; }
+.cosmos[data-step="resumo"] .place--bar .n,
+.cosmos[data-step="resumo"] .place--bar .z { font-size: 12px; }
+.cosmos[data-step="resumo"] .place--bar .r { font-size: 10px; }
+.cosmos[data-step="resumo"] .place--ni .r { font-size: 12px; }
+
+/* "baldeação" chip icon (small transfer circle) */
+.chip__bald { position: relative; flex: none; width: 17px; height: 17px; }
+.chip__bald img { position: absolute; max-width: none; }
+.chip__bald .o { inset: 0; width: 17px; height: 17px; }
+.chip__bald .i { left: 5.2px; top: 5.2px; width: 6.6px; height: 6.6px; mix-blend-mode: multiply; }
+
+/* legend: region colour lines drawn in CSS (one per region of the route) */
+.legend .lg-bar { position: absolute; width: 2px; height: 47.08px; }
+
+/* title of each route (same placement; Nova Iguaçu's image is 215 × 111) */
+.cosmos[data-route="novaiguacu"] .cosmos__title { width: 143.1px; height: 76px; }   /* 433 × 230 image at the "trajetos" height */
+.cosmos.is-mobile[data-route="novaiguacu"] .cosmos__title { width: 135.7px; height: 72.1px; }/* name written on the left of its tick (just before a municipality bar) */
+.st--flip .st__lb { left: auto; right: 3px; transform-origin: right bottom; text-align: right; }
+/* resumo: a municipality label followed closely by another one is written on the LEFT of its bar (mesquita | são joão de meriti) */
+/* all municipality bars share one height; a label followed closely by another goes on the LEFT of its bar (mesquita | são joão de meriti) */
+.cosmos[data-step="resumo"] .st--bar-l .place--bar { left: auto; right: -4px; text-align: right; align-items: flex-end; }
+/* desktop: the top card grows with its text (keeps the Figma size as a minimum and the same margins);
+   it sits in the flow, so the stack — and the cards behind it — follow its height */
+.cosmos:not(.is-mobile) .relatos { height: auto; }
+.cosmos:not(.is-mobile) .card[data-top] { position: relative; inset: auto; }
+.cosmos:not(.is-mobile) .card[data-pos="1"][data-top] { margin: 20.65px 17.67px 46.3px 16.58px; min-height: 346.1px; }
+.cosmos:not(.is-mobile) .card[data-pos="2"][data-top] { margin: 35.11px 21.38px 20.65px 20.26px; min-height: 357.3px; }
+.cosmos:not(.is-mobile) .card[data-pos="3"][data-top] { margin: 56.38px 22.74px 23.09px 21.65px; min-height: 333.5px; }
+.cosmos:not(.is-mobile) .card[data-pos="r"][data-top] { margin: 20.65px 16.58px 33.25px 25.03px; min-height: 359.1px; }
+/* resumo: names hidden by the scale show on hover (mouse) or on tap (touch) — every route */
+.cosmos[data-step="resumo"] .cosmos__map .maplibregl-marker.st:not(.st--bar):not(.st--place) { pointer-events: auto; cursor: help; }
+.st::before { content: ""; position: absolute; left: -8px; width: 16px; top: -6px; bottom: -4px; }
+.cosmos[data-step="resumo"] .st:hover,
+.cosmos[data-step="resumo"] .st.is-peek { z-index: 5; }
+.cosmos[data-step="resumo"] .st:hover .st__lb,
+.cosmos[data-step="resumo"] .st.is-peek .st__lb {
+  opacity: 1;
+  background: rgba(237, 234, 228, .92);
+  padding: 2px 4px;
+  box-shadow: 0 1px 4px rgba(6, 9, 34, .12);
+}
+.cosmos[data-step="resumo"] .st:hover .st__tk,
+.cosmos[data-step="resumo"] .st.is-peek .st__tk { width: 3.5px; left: -1.75px; }.cosmos[data-step="resumo"] .st:hover .st__lb,
+.cosmos[data-step="resumo"] .st.is-peek .st__lb { transition: opacity .12s ease; }
+/* hover / tap: the tick also grows, so it is clear which tick the name belongs to */
+.cosmos[data-step="resumo"] .st:not(.st--bar):not(.st--place) { transition: opacity .5s ease, height .18s ease; }
+.cosmos[data-step="resumo"] .st:not(.st--bar):not(.st--place):hover,
+.cosmos[data-step="resumo"] .st.is-peek { height: 66px; }
+/* phone resumo: tapped tick grows (wins over the shorter phone ticks above) and gets a bit thicker */
+.cosmos.is-mobile[data-step="resumo"] .st.is-peek { height: 58px; }
+.cosmos.is-mobile[data-step="resumo"] .st.is-peek .st__tk { left: -1.5px; width: 3px; }
+
+/* ============================== RIO BONITO (mesmo player) ============================== */
+/* title sticker: 694 × 380 export → 222 × 121.6 (Figma 222 × 118 + shadow); compact = 140 wide, like the others */
+.cosmos[data-route="riobonito"] .cosmos__title { width: 139.3px; height: 76px; }   /* 691 × 377 image at the "trajetos" height */
+.cosmos.is-mobile[data-route="riobonito"] .cosmos__title { width: 140.6px; height: 76.7px; }
+/* "barca ●●●●●" chip */
+.chip__dots { flex: none; width: 27px; height: 6px; background: radial-gradient(circle, var(--escuro) 2.1px, transparent 2.5px) 0 50% / 5.5px 6px repeat-x; }
+/* ESDI / lapa written on the LEFT of its pin (the route arrives from the east) */
+.esdi-lb--left { align-items: flex-end; text-align: right; }
+/* "centro, RIO DE JANEIRO": the big label sits on a thick blue bar */
+.st--bar.st--place .place--up { left: -4px; }
+
+/* ============================== PERFIL DE CELULAR (todos os trajetos, passos 1–3) ==============================
+   Tudo que fica sobre o mapa a ~80% do desktop: chips, nomes, tracinhos, barras, pinos, baldeação.
+   As proporções entre eles ficam iguais (bairro × cidade continuam diferentes). O resumo tem regras próprias. */
+.cosmos.is-mobile:not([data-step="resumo"]) .st { height: calc(var(--tall, 80px) * .8); }
+.cosmos.is-mobile:not([data-step="resumo"]) .st__tk { left: -1px; width: 2px; }
+.cosmos.is-mobile:not([data-step="resumo"]) .st--bar .st__tk { left: -3.2px; width: 6.4px; }
+.cosmos.is-mobile:not([data-step="resumo"]) .st__lb { font-size: 11.5px; }
+.cosmos.is-mobile:not([data-step="resumo"]) .place .n { font-size: 16.5px; }
+.cosmos.is-mobile:not([data-step="resumo"]) .place .z,
+.cosmos.is-mobile:not([data-step="resumo"]) .place--ni .z { font-size: 14.5px; }
+.cosmos.is-mobile:not([data-step="resumo"]) .place--ni .r { font-size: 11px; }
+.cosmos.is-mobile:not([data-step="resumo"]) .place--bar .n { font-size: 11.5px; }
+.cosmos.is-mobile:not([data-step="resumo"]) .place--bar .z { font-size: 12px; }
+.cosmos.is-mobile:not([data-step="resumo"]) .place--bar .r { font-size: 9.5px; }
+.cosmos.is-mobile:not([data-step="resumo"]) .esdi-lb b { font-size: 14px; }
+.cosmos.is-mobile:not([data-step="resumo"]) .esdi-lb i { font-size: 11.5px; }
+.cosmos.is-mobile:not([data-step="resumo"]) .pin { width: 38px; height: 38px; }
+.cosmos.is-mobile:not([data-step="resumo"]) .pin--end,
+.cosmos.is-mobile:not([data-step="resumo"]) .pin--ni { width: 32px; height: 32px; }
+/* transfer circle: small 38 px, big (current step) 75 px — same centre */
+.cosmos.is-mobile:not([data-step="resumo"]) .bald2 { width: 38px; height: 38px; }
+.cosmos.is-mobile:not([data-step="resumo"]) .bald2 .o { left: 0; top: 0; width: 38px; height: 38px; }
+.cosmos.is-mobile:not([data-step="resumo"]) .bald2 .i { left: 11.6px; top: 11.6px; width: 14.8px; height: 14.8px; }
+.cosmos.is-mobile[data-step="baldeacao"] .bald2--b .o,
+.cosmos.is-mobile[data-step="inicio"] .bald2--i .o,
+.cosmos.is-mobile[data-step="final"] .bald2--f .o { left: -18.65px; top: -18.65px; width: 75.3px; height: 75.3px; }
+.cosmos.is-mobile[data-step="baldeacao"] .bald2--b .i,
+.cosmos.is-mobile[data-step="inicio"] .bald2--i .i,
+.cosmos.is-mobile[data-step="final"] .bald2--f .i { left: 4.35px; top: 4.35px; width: 29.3px; height: 29.3px; }
+/* chips */
+.cosmos.is-mobile .chip-group { gap: 4px; }
+.cosmos.is-mobile .chip-title { font-size: 14px; }
+.cosmos.is-mobile .chip { height: 24px; padding: 4px; gap: 6px; font-size: 12px; }
+.cosmos.is-mobile .chip img { width: 11.5px; height: 11.5px; }
+.cosmos.is-mobile .chip--time { font-size: 13.5px; padding: 0 5px; gap: 10px; }
+.cosmos.is-mobile .chip--time img { width: 14px; height: 14px; }
+.cosmos.is-mobile .chip--two { height: 39px; padding-top: 3px; }
+.cosmos.is-mobile .chip img[src*="linha-tracejada-chip"] { width: 38px !important; height: 1px !important; }
+.cosmos.is-mobile .chip img[src*="linha-metro-chip"] { width: 21.5px !important; height: 4px !important; }
+.cosmos.is-mobile .chip__bald { width: 13.5px; height: 13.5px; }
+.cosmos.is-mobile .chip__bald .o { width: 13.5px; height: 13.5px; }
+.cosmos.is-mobile .chip__bald .i { left: 4.1px; top: 4.1px; width: 5.3px; height: 5.3px; }
+.cosmos.is-mobile .chip__dots { width: 21px; height: 5px; background-size: 4.3px 5px; background-image: radial-gradient(circle, var(--escuro) 1.7px, transparent 2px); }
+
+/* ============================== SOBRE ============================== */
+/* own page (#sobre): light background, dark-blue text; titles and subtitles in Fira Mono, body in Archivo Narrow */
+.sobre { min-height: 100vh; min-height: 100dvh; padding-top: var(--menu-h); background: var(--fundo); color: #202640; isolation: isolate; }
+/* the SAME intro map image, at the SAME scale as the intro ("cover" of a 2400 × 800 image = max(100vw, 300vh) wide),
+   only slid sideways so the window shows its emptiest stretch (around x = 940 of 2400, few lines) — clamped so the
+   image always covers the window. Pinned to the window. */
+.sobre::before {
+  content: "";
+  position: fixed;
+  left: 0; top: 0; width: 100%;
+  height: 100vh;
+  --bg-w: max(100vw, 300vh);
+  background: linear-gradient(var(--bg-veu), var(--bg-veu)), url("../assets/intro/bg-desktop.png") no-repeat;
+  background-size: 100% 100%, var(--bg-w) auto;
+  background-position: 0 0, clamp(100vw - var(--bg-w), 50vw - var(--bg-w) * .392, 0px) center;
+  z-index: -1;
+  pointer-events: none;
+}
+.sobre__body { max-width: 680px; margin: 0 auto; padding: 132px 40px 120px; }
+/* entrance: every block slides up from below while fading in — the ones on screen one after the other, the rest
+   as they scroll into view (js/main.js adds .is-in) */
+.sobre.is-anim .sobre__body > .acc, .sobre.is-anim .sobre__cta {
+  opacity: 0;
+  transform: translateY(48px);
+  transition: opacity .7s ease, transform .9s cubic-bezier(.16, .84, .3, 1);
+  transition-delay: var(--d, 0s);
+}
+.sobre.is-anim .sobre__body > .acc.is-in, .sobre.is-anim .sobre__cta.is-in { opacity: 1; transform: none; }
+/* the menu fades in too, so "sobre" feels like a new page opening */
+.sobre.is-anim .topbar { animation: sobre-menu-in .6s ease both; }
+@keyframes sobre-menu-in { from { opacity: 0; } to { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .sobre.is-anim .sobre__body > .acc, .sobre.is-anim .sobre__cta { opacity: 1; transform: none; transition: none; } .sobre.is-anim .topbar { animation: none; } }
+/* chapters = accordions (<details>): a thin rule between them, title left, "+" right (turns into "−" when open) */
+.acc { border-bottom: 1px solid rgba(32, 38, 64, .3); }
+.sobre__body > .acc:first-of-type > .acc__head { padding-top: 0; }   /* first chapter: no rule above it */
+/* opening quote of ".o projeto": bigger, in ESDI red, with a red bar */
+.sobre__quote {
+  margin: 4px 0 32px; padding-left: 18px;
+  border-left: 3px solid var(--esdi);
+  font-family: var(--f-narrow); font-weight: 600; font-size: 20px; line-height: 1.35;
+  color: var(--esdi);
+}
+.sobre__body p.sobre__quote { font-size: 20px; line-height: 1.35; }
+.acc__head {
+  list-style: none; cursor: pointer;
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  padding: 22px 0;
+  transition: opacity .15s;
+}
+.acc__head::-webkit-details-marker { display: none; }
+.acc__head:hover { opacity: .65; }
+.acc__head:focus-visible { outline: 2px solid var(--azul); outline-offset: 4px; }
+.acc__head .sobre__h1, .acc__head .sobre__h2 { margin: 0; }
+.acc__icon { position: relative; flex: none; width: 14px; height: 14px; }
+.acc__icon::before, .acc__icon::after {
+  content: ""; position: absolute; left: 0; top: 50%; width: 100%; height: 2px; margin-top: -1px;
+  background: currentColor; transition: transform .25s ease;
+}
+.acc__icon::after { transform: rotate(90deg); }
+.acc[open] > .acc__head > .acc__icon::after { transform: rotate(0deg); }
+.acc__body { padding: 2px 0 36px; }
+.acc[open] > .acc__body { animation: acc-in .45s ease both; }
+@keyframes acc-in { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) { .acc[open] > .acc__body { animation: none; } .acc__icon::before, .acc__icon::after { transition: none; } }
+/* subchapters (inside .metodologia): lighter rule, tighter */
+.acc--sub { border-bottom-color: rgba(32, 38, 64, .18); }
+.acc--sub:first-child { border-top: 1px solid rgba(32, 38, 64, .18); }
+.acc--sub > .acc__head { padding: 16px 0; }
+.acc--sub > .acc__head .acc__icon { width: 11px; height: 11px; }
+.acc--sub > .acc__body { padding: 0 0 28px; }
+.acc--sub:last-child { border-bottom: 0; }
+/* publications */
+.sobre__pubs { list-style: none; margin: 0; padding: 0; }
+.sobre__pubs li + li { margin-top: 20px; }
+.sobre__pub-tipo { display: block; margin-bottom: 6px; font-family: var(--f-mono); font-size: 12px; line-height: 1.4; opacity: .75; }
+.sobre__pubs a { font-family: var(--f-narrow); font-weight: 700; font-size: 16px; line-height: 1.4; }
+.sobre__cta { margin-top: 72px; text-align: center; }
+.sobre__body a.btn-cta { color: var(--escuro); text-decoration: none; }
+.sobre__body a.btn-cta:hover, .sobre__body a.btn-cta:focus-visible { color: #fff; opacity: 1; }
+/* rodapé de autoria, ao fim do "sobre" */
+.sobre__footer { max-width: 680px; margin: 0 auto; padding: 24px 40px 48px; font-family: var(--f-mono); font-size: 12px; line-height: 1.5; color: #202640; opacity: .75; }
+.sobre__footer p + p { margin-top: 1.2em; }
+@media (max-width: 767px) { .sobre__footer { padding: 16px 24px 40px; font-size: 11px; } }
+.sobre__h1 { margin: 0 0 24px; font-family: var(--f-mono); font-weight: 700; font-size: 20px; line-height: 1.2; letter-spacing: -.01em; }
+.sobre__h2 { margin: 48px 0 20px; font-family: var(--f-mono); font-weight: 500; font-size: 16px; line-height: 1.3; }
+.sobre__h1 + .sobre__h2 { margin-top: 0; }
+.sobre__body p { font-family: var(--f-narrow); font-size: 16px; line-height: 1.5; }
+.sobre__body p + p { margin-top: 1em; }
+.sobre__body a { color: #202640; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+.sobre__body a:hover, .sobre__body a:focus-visible { opacity: .7; }
+.sobre__vozes { list-style: none; margin: 28px 0 0; padding: 0; font-family: var(--f-narrow); font-size: 16px; line-height: 1.5; }
+.sobre__vozes b { font-weight: 700; }
+.sobre .topbar__menu a[aria-current="page"] { text-decoration-thickness: 3px; }
+/* figura: um círculo por ano (raio = distância média ponderada) */
+.sobre__fig { margin: 28px 0; }
+.sobre__fig svg { display: block; width: 100%; height: auto; }
+.sobre__fig figcaption { margin-top: 8px; font-family: var(--f-narrow); font-size: 14px; line-height: 1.4; opacity: .8; }
+.sobre__fig .c-ring { fill: none; stroke: #202640; stroke-width: 4; }
+.sobre__fig .c-radius { stroke: #202640; stroke-width: 1; stroke-dasharray: 2 2; opacity: .6; }
+.sobre__fig .c-hub { fill: #202640; }
+.sobre__fig .c-yr { font-family: var(--f-narrow); font-weight: 700; font-size: 19px; fill: #202640; }
+.sobre__fig .c-val { font-family: var(--f-mono); font-size: 13px; fill: #202640; }
+.sobre__fig .is-lim .c-ring { stroke: var(--cimento); stroke-width: 2.5; stroke-dasharray: 6 4; }
+.sobre__fig .is-lim .c-yr { fill: var(--cimento); }
+@media (max-width: 767px) {
+  .sobre__body { padding: 40px 24px 80px; }
+  .acc__head { padding: 18px 0; }
+  .sobre__body p.sobre__quote { font-size: 18px; padding-left: 14px; margin-bottom: 26px; }
+  .acc--sub > .acc__head { padding: 14px 0; }
+}
+/* ---------- menu clicks open like a new page (início → capa, histórias → seleção; sobre has its own) ---------- */
+/* uses the `translate` property, so elements that are already centred with `transform` keep their place */
+@keyframes page-rise { from { opacity: 0; translate: 0 48px; } to { opacity: 1; translate: 0 0; } }
+.intro.page-in .topbar,
+.intro.page-in .cover__bg { animation: sobre-menu-in .6s ease both; }
+.intro.page-in .cover__title,
+.intro.page-in .btn-start,
+.intro.page-in .info--selection > .text,
+.intro.page-in .routes > li { animation: page-rise .9s cubic-bezier(.16, .84, .3, 1) both; }
+.intro.page-in .cover__title { animation-delay: .1s; }
+.intro.page-in .btn-start { animation-delay: .3s; }
+.intro.page-in .info--selection > .text { animation-delay: .1s; }
+.intro.page-in .routes > li:nth-child(1) { animation-delay: .22s; }
+.intro.page-in .routes > li:nth-child(2) { animation-delay: .32s; }
+.intro.page-in .routes > li:nth-child(3) { animation-delay: .42s; }
+@media (prefers-reduced-motion: reduce) {
+  .intro.page-in .topbar, .intro.page-in .cover__bg, .intro.page-in .cover__title, .intro.page-in .btn-start,
+  .intro.page-in .info--selection > .text, .intro.page-in .routes > li { animation: none; }
+}
+/* footnote of the 1963 chart text: the km are straight-line distances */
+.chart-copy .fn-mark { font-size: .7em; line-height: 0; vertical-align: super; }
+.chart-copy .fn-mark a { text-decoration: none; color: inherit; }
+.chart-copy .chart-fn { display: block; margin-top: 10px; font-family: var(--f-mono); font-weight: 400; font-size: 11.5px; line-height: 1.35; color: #4b4f68; }
+/* ============================== RESUMO (desenho simplificado do trajeto, Figma) ============================== */
+/* the drawing (assets/resumo/<rota>-<layout>.svg, placed by js/cosmos.js) on a NEUTRAL background with a very
+   light halftone (same 3 px grid turned 15° as the map texture); the map fades out */
+.cosmos__map { transition: opacity .6s ease, visibility 0s linear 0s; }
+.cosmos[data-step="resumo"] .cosmos__map { opacity: 0; visibility: hidden; transition: opacity .6s ease, visibility 0s linear .6s; }
+.cosmos .legend { display: none; }                         /* the old map legend: the drawing has its own */
+.resumo-bg {
+  position: fixed; inset: 0; z-index: 1; overflow: hidden; pointer-events: none;
+  background: var(--jornal);
+  opacity: 0; visibility: hidden; transition: opacity .6s ease, visibility 0s linear .6s;
+}
+.resumo-bg::after {
+  content: ""; position: absolute; inset: -50%;
+  background: radial-gradient(circle, #060922 .75px, transparent 1.1px) 0 0 / 3px 3px;
+  opacity: .04; transform: rotate(15deg);   /* halftone mais suave (era .055) */
+}
+.cosmos[data-step="resumo"] .resumo-bg { opacity: 1; visibility: visible; transition: opacity .6s ease; }
+.resumo-diagram { position: absolute; z-index: 3; max-width: none; pointer-events: none; animation: resumo-in .7s ease both; }
+@keyframes resumo-in { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) { .resumo-diagram { animation: none; } }
+
+/* ============================== LOADING (antes de cada trajeto) ============================== */
+/* same language as the rest: paper grey + light halftone, the route's title, a bus line drawing itself from the start
+   (route colour) to the ESDI (red ring), Fira Mono caption and the pink "use fones" pill */
+.loader {
+  position: fixed; inset: 0; z-index: 60;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--jornal); overflow: hidden;
+  opacity: 1; transition: opacity .55s ease;
+}
+.loader::after {
+  content: ""; position: absolute; inset: -50%; pointer-events: none;
+  background: radial-gradient(circle, #060922 .75px, transparent 1.1px) 0 0 / 3px 3px;
+  opacity: .04; transform: rotate(15deg);   /* halftone mais suave (era .055) */
+}
+.loader.is-out { opacity: 0; pointer-events: none; }
+.loader__in { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; gap: 22px; padding: 24px; }
+.loader__title { height: 110px; width: auto; max-width: 80vw; filter: drop-shadow(1px 1px 1px rgba(0, 0, 0, .25)); }
+.loader__line svg { display: block; width: 260px; height: 40px; overflow: visible; }
+.loader .ln-zone { fill: none; stroke: var(--c); stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 260; stroke-dashoffset: 260; }
+.loader .ln-bus { fill: none; stroke: var(--escuro); stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 7 6.5; }
+.loader .pin-a { fill: var(--c); stroke: var(--azul); stroke-width: 2.5; }
+.loader .pin-b { fill: var(--claro); stroke: var(--esdi); stroke-width: 2.5; opacity: 0; transform-origin: 247px 16px; }
+/* the bus dashes appear under a moving mask: a white rect that slides off (cheap, works for a dashed stroke) */
+.loader__line { position: relative; }
+.loader__line::after {
+  content: ""; position: absolute; top: -4px; bottom: -4px; left: 18px; right: -4px; background: var(--jornal);
+  transform-origin: right; transform: scaleX(1);
+}
+.loader.is-on .loader__line::after { animation: ld-wipe 1.5s cubic-bezier(.45, .05, .3, 1) .25s forwards; }
+.loader.is-on .ln-zone { animation: ld-draw 1.5s cubic-bezier(.45, .05, .3, 1) .25s forwards; }
+.loader.is-on .pin-b { animation: ld-pop .35s ease 1.65s forwards; }
+@keyframes ld-wipe { to { transform: scaleX(0); } }
+@keyframes ld-draw { to { stroke-dashoffset: 0; } }
+@keyframes ld-pop { from { opacity: 0; transform: scale(.4); } to { opacity: 1; transform: none; } }
+.loader__txt { font-family: var(--f-mono); font-weight: 500; font-size: 13px; letter-spacing: .02em; color: var(--azul); }
+.loader__dots i { display: inline-block; width: 3px; height: 3px; margin-left: 3px; background: var(--azul); border-radius: 50%; vertical-align: baseline; opacity: .2; }
+.loader.is-on .loader__dots i { animation: ld-dot 1.1s ease-in-out infinite; }
+.loader.is-on .loader__dots i:nth-child(2) { animation-delay: .18s; }
+.loader.is-on .loader__dots i:nth-child(3) { animation-delay: .36s; }
+@keyframes ld-dot { 0%, 100% { opacity: .2; } 40% { opacity: 1; } }
+.loader__pill { margin-top: 2px; }
+.loader.is-on .loader__in > * { animation: ld-rise .7s cubic-bezier(.16, .84, .3, 1) both; }
+.loader.is-on .loader__in > :nth-child(2) { animation-delay: .08s; }
+.loader.is-on .loader__in > :nth-child(3) { animation-delay: .16s; }
+.loader.is-on .loader__in > :nth-child(4) { animation-delay: .24s; }
+@keyframes ld-rise { from { opacity: 0; translate: 0 24px; } to { opacity: 1; translate: 0 0; } }
+@media (max-width: 767px) {
+  .loader__title { height: 88px; }
+  .loader__line svg { width: 220px; height: 34px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .loader.is-on .loader__in > *, .loader.is-on .loader__dots i { animation: none; }
+  .loader.is-on .loader__line::after { animation: none; transform: scaleX(0); }
+  .loader.is-on .ln-zone { animation: none; stroke-dashoffset: 0; }
+  .loader.is-on .pin-b { animation: none; opacity: 1; }
+}/* route running west (Rio Bonito): mirrored line, revealed from the right */
+.loader.is-flip .loader__line svg { transform: scaleX(-1); }
+.loader.is-flip .loader__line::after { left: -4px; right: 18px; transform-origin: left; }
